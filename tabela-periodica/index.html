@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Periódica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">← VOLTAR AO HUB</a>
+
+    <header>
+        <h1>TABELA PERIÓDICA</h1>
+        <p class="subtitle">Clique em um elemento para ver os detalhes</p>
+    </header>
+
+    <main>
+        <div class="legend" id="legend"></div>
+
+        <div class="table-scroll">
+            <div class="periodic-table" id="periodic-table"></div>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay" onclick="closeDetails()"></div>
+
+    <aside class="details-panel" id="details-panel">
+        <button class="btn-close" onclick="closeDetails()">✕</button>
+        <div id="details-content"></div>
+    </aside>
+
+    <script src="elements.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
