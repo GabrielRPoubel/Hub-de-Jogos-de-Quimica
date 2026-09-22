@@ -1,6 +1,6 @@
 const reactions = {
     facil: [
-        { reactants: ['S', 'O2'], products: ['SO2'], balanced: [1, 1, 1], hint: 'Equação já balanceada com 1' },
+        { reactants: ['S', 'O2'], products: ['SO2'], balanced: [1, 1, 1], hint: 'Formação do dióxido de enxofre' },
         { reactants: ['Ca', 'O2'], products: ['CaO'], balanced: [2, 1, 2], hint: 'O cálcio se oxida' },
         { reactants: ['Mg', 'O2'], products: ['MgO'], balanced: [2, 1, 2], hint: 'O magnésio queima' },
         { reactants: ['N2', 'H2'], products: ['NH3'], balanced: [1, 3, 2], hint: 'Processo de Haber' },
@@ -51,7 +51,6 @@ const reactions = {
         { reactants: ['K', 'Cl2'], products: ['KCl'], balanced: [2, 1, 2], hint: 'Cloreto de potássio' },
         { reactants: ['Rb', 'Br2'], products: ['RbBr'], balanced: [2, 1, 2], hint: 'Brometo de rubídio' },
         { reactants: ['Cs', 'Br2'], products: ['CsBr'], balanced: [2, 1, 2], hint: 'Brometo de césio' },
-        { reactants: ['Na', 'Cl2'], products: ['NaCl'], balanced: [2, 1, 2], hint: 'Cloreto de sódio' },
         { reactants: ['Zn', 'I2'], products: ['ZnI2'], balanced: [1, 1, 1], hint: 'Iodeto de zinco' },
         { reactants: ['Cu', 'Br2'], products: ['CuBr2'], balanced: [1, 1, 1], hint: 'Brometo de cobre' },
         { reactants: ['Fe', 'F2'], products: ['FeF2'], balanced: [1, 1, 1], hint: 'Fluoreto ferroso' },
@@ -59,7 +58,6 @@ const reactions = {
         { reactants: ['Ba', 'F2'], products: ['BaF2'], balanced: [1, 1, 1], hint: 'Fluoreto de bário' },
         { reactants: ['Sr', 'Br2'], products: ['SrBr2'], balanced: [1, 1, 1], hint: 'Brometo de estrôncio' },
         { reactants: ['Mg', 'Cl2'], products: ['MgCl2'], balanced: [1, 1, 1], hint: 'Cloreto de magnésio' },
-        { reactants: ['Ca', 'Cl2'], products: ['CaCl2'], balanced: [1, 1, 1], hint: 'Cloreto de cálcio' },
         { reactants: ['Ba', 'I2'], products: ['BaI2'], balanced: [1, 1, 1], hint: 'Iodeto de bário' },
         { reactants: ['Sr', 'I2'], products: ['SrI2'], balanced: [1, 1, 1], hint: 'Iodeto de estrôncio' },
         { reactants: ['Rb', 'I2'], products: ['RbI'], balanced: [2, 1, 2], hint: 'Iodeto de rubídio' },
@@ -75,7 +73,7 @@ const reactions = {
         { reactants: ['Ba', 'S'], products: ['BaS'], balanced: [1, 1, 1], hint: 'Sulfeto de bário' },
         { reactants: ['Sr', 'S'], products: ['SrS'], balanced: [1, 1, 1], hint: 'Sulfeto de estrôncio' },
         { reactants: ['Mg', 'S'], products: ['MgS'], balanced: [1, 1, 1], hint: 'Sulfeto de magnésio' },
-        { reactants: ['Al', 'N2'], products: ['AlN'], balanced: [2, 1, 2], hint: 'Nitretode alumínio' }
+        { reactants: ['Al', 'N2'], products: ['AlN'], balanced: [2, 1, 2], hint: 'Nitreto de alumínio' }
     ],
     medio: [
         { reactants: ['Fe', 'O2', 'H2O'], products: ['Fe(OH)3'], balanced: [4, 3, 6, 4], hint: 'Ferro com oxigênio e água' },
@@ -88,8 +86,8 @@ const reactions = {
         { reactants: ['K', 'Cl2'], products: ['KCl'], balanced: [2, 1, 2], hint: 'Cloreto de potássio' },
         { reactants: ['Al', 'HCl'], products: ['AlCl3', 'H2'], balanced: [2, 6, 2, 3], hint: 'Alumínio com HCl' },
         { reactants: ['Fe', 'HCl'], products: ['FeCl2', 'H2'], balanced: [1, 2, 1, 1], hint: 'Ferro com HCl' },
-        { reactants: ['Fe', 'S'], products: ['Fe2S3'], balanced: [2, 3, 1], hint: 'Sulfeto ferroso' },
-        { reactants: ['Al', 'N2'], products: ['AlN'], balanced: [2, 1, 2], hint: 'Nitretode alumínio' },
+        { reactants: ['Fe', 'S'], products: ['Fe2S3'], balanced: [2, 3, 1], hint: 'Sulfeto férrico' },
+        { reactants: ['Al', 'N2'], products: ['AlN'], balanced: [2, 1, 2], hint: 'Nitreto de alumínio' },
         { reactants: ['Mg', 'H2O'], products: ['Mg(OH)2', 'H2'], balanced: [1, 2, 1, 1], hint: 'Magnésio com água' },
         { reactants: ['Fe', 'O2'], products: ['Fe3O4'], balanced: [3, 2, 1], hint: 'Magnetita' },
         { reactants: ['Cu', 'H2SO4'], products: ['CuSO4', 'H2'], balanced: [1, 1, 1, 1], hint: 'Cobre com ácido sulfúrico' },
@@ -99,9 +97,8 @@ const reactions = {
         { reactants: ['Mg', 'CO2'], products: ['MgO', 'C'], balanced: [2, 1, 2, 1], hint: 'Magnésio com CO2' },
         { reactants: ['CaCO3'], products: ['CaO', 'CO2'], balanced: [1, 1, 1], hint: 'Decomposição da calcita' },
         { reactants: ['NaHCO3'], products: ['Na2CO3', 'H2O', 'CO2'], balanced: [2, 1, 1, 1], hint: 'Decomposição do bicarbonato' },
-        { reactants: ['KClO3'], products: ['KCl', 'O2'], balanced: [2, 2, 3], hint: 'Decomposição do cloreto de potássio' },
+        { reactants: ['KClO3'], products: ['KCl', 'O2'], balanced: [2, 2, 3], hint: 'Decomposição do clorato de potássio' },
         { reactants: ['H2O2'], products: ['H2O', 'O2'], balanced: [2, 2, 1], hint: 'Decomposição do peróxido' },
-        { reactants: ['Na', 'H2O'], products: ['NaOH', 'H2'], balanced: [2, 2, 2, 1], hint: 'Sódio com água' },
         { reactants: ['K', 'H2O'], products: ['KOH', 'H2'], balanced: [2, 2, 2, 1], hint: 'Potássio com água' },
         { reactants: ['Li', 'H2O'], products: ['LiOH', 'H2'], balanced: [2, 2, 2, 1], hint: 'Lítio com água' },
         { reactants: ['Ca', 'HCl'], products: ['CaCl2', 'H2'], balanced: [1, 2, 1, 1], hint: 'Cálcio com HCl' },
@@ -119,10 +116,9 @@ const reactions = {
         { reactants: ['Zn', 'AgNO3'], products: ['Zn(NO3)2', 'Ag'], balanced: [1, 2, 1, 2], hint: 'Zinco com nitrato de prata' },
         { reactants: ['Mg', 'AgNO3'], products: ['Mg(NO3)2', 'Ag'], balanced: [1, 2, 1, 2], hint: 'Magnésio com nitrato de prata' },
         { reactants: ['Al', 'Fe2O3'], products: ['Al2O3', 'Fe'], balanced: [2, 1, 1, 2], hint: 'Reação termita' },
-        { reactants: ['Mg', 'N2'], products: ['Mg3N2'], balanced: [3, 1, 1], hint: 'Nitretode magnésio' },
-        { reactants: ['Ca', 'N2'], products: ['Ca3N2'], balanced: [3, 1, 1], hint: 'Nitretode cálcio' },
+        { reactants: ['Mg', 'N2'], products: ['Mg3N2'], balanced: [3, 1, 1], hint: 'Nitreto de magnésio' },
+        { reactants: ['Ca', 'N2'], products: ['Ca3N2'], balanced: [3, 1, 1], hint: 'Nitreto de cálcio' },
         { reactants: ['Al', 'Fe3O4'], products: ['Al2O3', 'Fe'], balanced: [8, 3, 4, 9], hint: 'Termita com magnetita' },
-        { reactants: ['Zn', 'HCl'], products: ['ZnCl2', 'H2'], balanced: [1, 2, 1, 1], hint: 'Zinco com HCl' },
         { reactants: ['Fe', 'Cl2'], products: ['FeCl3'], balanced: [2, 3, 2], hint: 'Cloreto férrico' },
         { reactants: ['Al', 'Br2'], products: ['AlBr3'], balanced: [2, 3, 2], hint: 'Brometo de alumínio' },
         { reactants: ['Fe', 'Br2'], products: ['FeBr3'], balanced: [2, 3, 2], hint: 'Brometo férrico' },
@@ -183,7 +179,7 @@ const reactions = {
         { reactants: ['Ni', 'H2SO4'], products: ['NiSO4', 'H2'], balanced: [1, 1, 1, 1], hint: 'Níquel com H2SO4' }
     ],
     dificil: [
-        { reactants: ['C', 'H2', 'O2'], products: ['CH4', 'H2O'], balanced: [1, 3, 2, 1, 2], hint: 'Formação do metano' },
+        { reactants: ['C', 'H2', 'O2'], products: ['CH4', 'H2O'], balanced: [1, 4, 1, 1, 2], hint: 'Formação do metano' },
         { reactants: ['Fe', 'HCl'], products: ['FeCl3', 'H2'], balanced: [2, 6, 2, 3], hint: 'Ferro com HCl' },
         { reactants: ['Al', 'HCl'], products: ['AlCl3', 'H2'], balanced: [2, 6, 2, 3], hint: 'Alumínio com HCl' },
         { reactants: ['Fe2O3', 'C'], products: ['Fe', 'CO2'], balanced: [2, 3, 4, 3], hint: 'Redução do óxido de ferro' },
@@ -210,24 +206,24 @@ const reactions = {
         { reactants: ['C2H4', 'O2'], products: ['CO2', 'H2O'], balanced: [1, 3, 2, 2], hint: 'Combustão do etileno' },
         { reactants: ['C2H2', 'O2'], products: ['CO2', 'H2O'], balanced: [2, 5, 4, 2], hint: 'Combustão do acetileno' },
         { reactants: ['C4H10', 'O2'], products: ['CO2', 'H2O'], balanced: [2, 13, 8, 10], hint: 'Combustão do butano' },
-        { reactants: ['C5H12', 'O2'], products: ['CO2', 'H2O'], balanced: [1, 8, 5, 6], hint: 'Combustão da pentana' },
+        { reactants: ['C5H12', 'O2'], products: ['CO2', 'H2O'], balanced: [1, 8, 5, 6], hint: 'Combustão do pentano' },
         { reactants: ['C6H6', 'O2'], products: ['CO2', 'H2O'], balanced: [2, 15, 12, 6], hint: 'Combustão do benzeno' },
         { reactants: ['CH3OH', 'O2'], products: ['CO2', 'H2O'], balanced: [2, 3, 2, 4], hint: 'Combustão do metanol' },
         { reactants: ['C2H5OH', 'O2'], products: ['CO2', 'H2O'], balanced: [1, 3, 2, 3], hint: 'Combustão do etanol' },
         { reactants: ['NH3', 'O2'], products: ['NO', 'H2O'], balanced: [4, 5, 4, 6], hint: 'Oxidação da amônia' },
-        { reactants: ['PH3', 'O2'], products: ['P2O5', 'H2O'], balanced: [2, 8, 2, 6], hint: 'Combustão da fosfina' },
+        { reactants: ['PH3', 'O2'], products: ['P2O5', 'H2O'], balanced: [2, 4, 1, 3], hint: 'Combustão da fosfina' },
         { reactants: ['H2S', 'O2'], products: ['SO2', 'H2O'], balanced: [2, 3, 2, 2], hint: 'Combustão do H2S' },
         { reactants: ['Cu2S', 'O2'], products: ['Cu2O', 'SO2'], balanced: [2, 3, 2, 2], hint: 'Queima do sulfeto de cobre' },
         { reactants: ['FeS2', 'O2'], products: ['Fe2O3', 'SO2'], balanced: [4, 11, 2, 8], hint: 'Pirita queimando' },
         { reactants: ['ZnS', 'O2'], products: ['ZnO', 'SO2'], balanced: [2, 3, 2, 2], hint: 'Queima do sulfeto de zinco' },
-        { reactants: ['PbS', 'O2'], products: ['PbO', 'SO2'], balanced: [2, 3, 2, 2], hint: 'Queima do galena' },
-        { reactants: ['HgO'], products: ['Hg', 'O2'], balanced: [2, 2, 1], hint: 'Decomposição do mercúrio' },
-        { reactants: ['Ag2O'], products: ['Ag', 'O2'], balanced: [2, 4, 1], hint: 'Decomposição da prata' },
+        { reactants: ['PbS', 'O2'], products: ['PbO', 'SO2'], balanced: [2, 3, 2, 2], hint: 'Queima da galena' },
+        { reactants: ['HgO'], products: ['Hg', 'O2'], balanced: [2, 2, 1], hint: 'Decomposição do óxido de mercúrio' },
+        { reactants: ['Ag2O'], products: ['Ag', 'O2'], balanced: [2, 4, 1], hint: 'Decomposição do óxido de prata' },
         { reactants: ['Na2O2', 'H2O'], products: ['NaOH', 'O2'], balanced: [2, 2, 4, 1], hint: 'Peróxido de sódio com água' },
         { reactants: ['CaC2', 'H2O'], products: ['Ca(OH)2', 'C2H2'], balanced: [1, 2, 1, 1], hint: 'Carbureto de cálcio' },
         { reactants: ['Al4C3', 'H2O'], products: ['Al(OH)3', 'CH4'], balanced: [1, 12, 4, 3], hint: 'Carbureto de alumínio' },
-        { reactants: ['Mg3N2', 'H2O'], products: ['Mg(OH)2', 'NH3'], balanced: [1, 6, 3, 2], hint: 'Nitretode magnésio com água' },
-        { reactants: ['Ca3N2', 'H2O'], products: ['Ca(OH)2', 'NH3'], balanced: [1, 6, 3, 2], hint: 'Nitretode cálcio com água' },
+        { reactants: ['Mg3N2', 'H2O'], products: ['Mg(OH)2', 'NH3'], balanced: [1, 6, 3, 2], hint: 'Nitreto de magnésio com água' },
+        { reactants: ['Ca3N2', 'H2O'], products: ['Ca(OH)2', 'NH3'], balanced: [1, 6, 3, 2], hint: 'Nitreto de cálcio com água' },
         { reactants: ['Na2O', 'H2O'], products: ['NaOH'], balanced: [1, 1, 2], hint: 'Óxido de sódio com água' },
         { reactants: ['K2O', 'H2O'], products: ['KOH'], balanced: [1, 1, 2], hint: 'Óxido de potássio com água' },
         { reactants: ['BaO', 'H2O'], products: ['Ba(OH)2'], balanced: [1, 1, 1], hint: 'Óxido de bário com água' },
@@ -239,17 +235,17 @@ const reactions = {
         { reactants: ['NO2', 'H2O'], products: ['HNO3', 'NO'], balanced: [3, 1, 2, 1], hint: 'Formação do ácido nítrico' },
         { reactants: ['Cl2', 'H2O'], products: ['HCl', 'HClO'], balanced: [1, 1, 1, 1], hint: 'Cloro com água' },
         { reactants: ['Na2O2', 'CO2'], products: ['Na2CO3', 'O2'], balanced: [2, 2, 2, 1], hint: 'Peróxido de sódio com CO2' },
-        { reactants: ['KO2', 'H2O'], products: ['KOH', 'O2', 'H2O2'], balanced: [4, 2, 4, 1, 2], hint: 'Superóxido de potássio' },
+        { reactants: ['KO2', 'H2O'], products: ['KOH', 'O2', 'H2O2'], balanced: [2, 2, 2, 1, 1], hint: 'Superóxido de potássio' },
         { reactants: ['Na', 'O2'], products: ['Na2O2'], balanced: [2, 1, 1], hint: 'Peróxido de sódio' },
         { reactants: ['K', 'O2'], products: ['KO2'], balanced: [1, 1, 1], hint: 'Superóxido de potássio' },
         { reactants: ['Rb', 'O2'], products: ['RbO2'], balanced: [1, 1, 1], hint: 'Superóxido de rubídio' },
         { reactants: ['Cs', 'O2'], products: ['CsO2'], balanced: [1, 1, 1], hint: 'Superóxido de césio' },
         { reactants: ['Na', 'S'], products: ['Na2S'], balanced: [2, 1, 1], hint: 'Sulfeto de sódio' },
         { reactants: ['K', 'S'], products: ['K2S'], balanced: [2, 1, 1], hint: 'Sulfeto de potássio' },
-        { reactants: ['Ca', 'N2'], products: ['Ca3N2'], balanced: [3, 1, 1], hint: 'Nitretode cálcio' },
-        { reactants: ['Sr', 'N2'], products: ['Sr3N2'], balanced: [3, 1, 1], hint: 'Nitretode estrôncio' },
-        { reactants: ['Ba', 'N2'], products: ['Ba3N2'], balanced: [3, 1, 1], hint: 'Nitretode bário' },
-        { reactants: ['Li', 'N2'], products: ['Li3N'], balanced: [6, 1, 2], hint: 'Nitretode lítio' },
+        { reactants: ['Ca', 'N2'], products: ['Ca3N2'], balanced: [3, 1, 1], hint: 'Nitreto de cálcio' },
+        { reactants: ['Sr', 'N2'], products: ['Sr3N2'], balanced: [3, 1, 1], hint: 'Nitreto de estrôncio' },
+        { reactants: ['Ba', 'N2'], products: ['Ba3N2'], balanced: [3, 1, 1], hint: 'Nitreto de bário' },
+        { reactants: ['Li', 'N2'], products: ['Li3N'], balanced: [6, 1, 2], hint: 'Nitreto de lítio' },
         { reactants: ['Ca3P2', 'H2O'], products: ['Ca(OH)2', 'PH3'], balanced: [1, 6, 3, 2], hint: 'Fosfeto de cálcio com água' },
         { reactants: ['Na3P', 'H2O'], products: ['NaOH', 'PH3'], balanced: [1, 3, 3, 1], hint: 'Fosfeto de sódio com água' },
         { reactants: ['AlP', 'H2O'], products: ['Al(OH)3', 'PH3'], balanced: [1, 3, 1, 1], hint: 'Fosfeto de alumínio com água' },
@@ -260,13 +256,13 @@ const reactions = {
         { reactants: ['MgCO3', 'HCl'], products: ['MgCl2', 'H2O', 'CO2'], balanced: [1, 2, 1, 1, 1], hint: 'Magnesita com HCl' },
         { reactants: ['Fe2O3', 'HCl'], products: ['FeCl3', 'H2O'], balanced: [1, 6, 2, 3], hint: 'Óxido de ferro com HCl' },
         { reactants: ['Al2O3', 'HCl'], products: ['AlCl3', 'H2O'], balanced: [1, 6, 2, 3], hint: 'Óxido de alumínio com HCl' },
-        { reactants: ['CuO', 'HCl'], products: ['CuCl2', 'H2O'], balanced: [1, 2, 1, 2], hint: 'Óxido de cobre com HCl' },
-        { reactants: ['ZnO', 'HCl'], products: ['ZnCl2', 'H2O'], balanced: [1, 2, 1, 2], hint: 'Óxido de zinco com HCl' },
+        { reactants: ['CuO', 'HCl'], products: ['CuCl2', 'H2O'], balanced: [1, 2, 1, 1], hint: 'Óxido de cobre com HCl' },
+        { reactants: ['ZnO', 'HCl'], products: ['ZnCl2', 'H2O'], balanced: [1, 2, 1, 1], hint: 'Óxido de zinco com HCl' },
         { reactants: ['Fe2O3', 'H2SO4'], products: ['Fe2(SO4)3', 'H2O'], balanced: [1, 3, 1, 3], hint: 'Óxido de ferro com H2SO4' },
         { reactants: ['Al2O3', 'H2SO4'], products: ['Al2(SO4)3', 'H2O'], balanced: [1, 3, 1, 3], hint: 'Óxido de alumínio com H2SO4' },
         { reactants: ['CuO', 'H2SO4'], products: ['CuSO4', 'H2O'], balanced: [1, 1, 1, 1], hint: 'Óxido de cobre com H2SO4' },
         { reactants: ['ZnO', 'H2SO4'], products: ['ZnSO4', 'H2O'], balanced: [1, 1, 1, 1], hint: 'Óxido de zinco com H2SO4' },
-        { reactants: ['Fe(OH)3'], products: ['Fe2O3', 'H2O'], balanced: [2, 1, 3], hint: 'Decomposição do hidróxido ferro' },
+        { reactants: ['Fe(OH)3'], products: ['Fe2O3', 'H2O'], balanced: [2, 1, 3], hint: 'Decomposição do hidróxido de ferro' },
         { reactants: ['Al(OH)3'], products: ['Al2O3', 'H2O'], balanced: [2, 1, 3], hint: 'Decomposição do hidróxido de alumínio' },
         { reactants: ['Cu(OH)2'], products: ['CuO', 'H2O'], balanced: [1, 1, 1], hint: 'Decomposição do hidróxido de cobre' },
         { reactants: ['Mg(OH)2'], products: ['MgO', 'H2O'], balanced: [1, 1, 1], hint: 'Decomposição do hidróxido de magnésio' },
@@ -279,7 +275,7 @@ const reactions = {
         { reactants: ['KOH', 'SO2'], products: ['K2SO3', 'H2O'], balanced: [2, 1, 1, 1], hint: 'KOH com SO2' },
         { reactants: ['CaO', 'SiO2'], products: ['CaSiO3'], balanced: [1, 1, 1], hint: 'Formação do silicato' },
         { reactants: ['Na2O', 'SiO2'], products: ['Na2SiO3'], balanced: [1, 1, 1], hint: 'Silicato de sódio' },
-        { reactants: ['Fe2O3', 'SiO2'], products: ['Fe2SiO4'], balanced: [1, 1, 1], hint: 'Silicato ferroso' },
+        { reactants: ['FeO', 'SiO2'], products: ['Fe2SiO4'], balanced: [2, 1, 1], hint: 'Silicato ferroso' },
         { reactants: ['MgO', 'SiO2'], products: ['Mg2SiO4'], balanced: [2, 1, 1], hint: 'Silicato de magnésio' }
     ]
 };
@@ -327,7 +323,7 @@ function selectDifficulty(diff) {
     } else {
         gameDuration = 300;
         document.getElementById('timer').textContent = '5:00';
-        document.getElementById('errors-count').textContent = '0/∞';
+        document.getElementById('errors-count').textContent = '0';
         machoPanel.classList.add('blurred');
     }
     
@@ -461,7 +457,7 @@ function renderCoefficientInputs(reaction) {
         input.type = 'number';
         input.id = `coeff-${index}`;
         input.min = '1';
-        input.max = '10';
+        input.max = '20';
         
         div.appendChild(label);
         div.appendChild(input);
@@ -472,8 +468,13 @@ function renderCoefficientInputs(reaction) {
 }
 
 function checkAnswer() {
+    if (gamePaused) return;
+
     const inputs = document.querySelectorAll('.coeff-item input');
-    const userValues = Array.from(inputs).map(input => parseInt(input.value) || 1);
+    const userValues = Array.from(inputs).map(input => {
+        const value = parseInt(input.value, 10);
+        return Number.isNaN(value) ? 0 : value;
+    });
     
     const isCorrect = currentReaction.balanced.every((val, index) => val === userValues[index]);
     
@@ -503,13 +504,15 @@ function checkAnswer() {
             document.getElementById('errors-count').textContent = remaining;
             
             if (errors >= maxErrors) {
+                gamePaused = true;
                 showMessage('3 erros! Pulando para próxima...', 'error');
-                errors = 0;
                 setTimeout(nextReaction, 1500);
                 return;
             }
             showMessage(`Incorreto! Erros restantes: ${remaining}`, 'error');
         } else if (difficulty === 'dificil') {
+            gamePaused = true;
+            document.getElementById('errors-count').textContent = errors;
             showMessage('Incorreto! Trocando equação...', 'error');
             setTimeout(nextReaction, 1000);
             return;
@@ -600,6 +603,10 @@ function nextReaction() {
     questionStartTime = Date.now();
     hintsUsed = 0;
     gamePaused = false;
+    if (difficulty === 'medio') {
+        errors = 0;
+        document.getElementById('errors-count').textContent = maxErrors;
+    }
     renderEquation(currentReaction);
     renderCoefficientInputs(currentReaction);
     document.getElementById('message').textContent = '';
