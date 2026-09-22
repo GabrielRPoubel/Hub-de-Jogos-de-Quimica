@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equilíbrio de Reações</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">← Voltar ao Hub</a>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="difficulty-popup" id="difficulty-popup">
+        <h2>Escolha a Dificuldade</h2>
+        <div class="difficulty-options">
+            <button class="btn btn-difficulty easy" onclick="selectDifficulty('facil')">
+                <span class="diff-icon">🌱</span>
+                <span class="diff-name">Fácil</span>
+            </button>
+            <button class="btn btn-difficulty medium" onclick="selectDifficulty('medio')">
+                <span class="diff-icon">⚡</span>
+                <span class="diff-name">Médio</span>
+            </button>
+            <button class="btn btn-difficulty hard" onclick="selectDifficulty('dificil')">
+                <span class="diff-icon">🔥</span>
+                <span class="diff-name">Difícil</span>
+            </button>
+        </div>
+    </div>
+
+    <header id="game-header">
+        <h1>Equilíbrio de Reações</h1>
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-label">Pontuação</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Questão</span>
+                <span class="stat-value" id="timer">--:--</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Tempo Total</span>
+                <span class="stat-value" id="game-timer">0:00</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Acertos</span>
+                <span class="stat-value" id="correct-count">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Erros</span>
+                <span class="stat-value" id="errors-count">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Dificuldade</span>
+                <span class="stat-value" id="difficulty-label">-</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="game-main">
+        <div class="game-container">
+            <div class="game-area">
+                <button class="info-btn" id="info-btn" onclick="toggleMachoPanel()">ℹ️</button>
+
+                <div class="equation-display" id="equation-display">
+                    <!-- Equação desbalanceada aparece aqui -->
+                </div>
+
+                <div class="coefficients-area" id="coefficients-area">
+                    <!-- Quadrados para preencher coeficientes -->
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-check" onclick="checkAnswer()">Verificar</button>
+                    <button class="btn btn-skip" onclick="skipQuestion()">Pular</button>
+                    <button class="btn btn-hint" onclick="showHint()">Dica</button>
+                </div>
+
+                <div class="message" id="message"></div>
+
+                <div class="hints-area" id="hints-area"></div>
+            </div>
+
+            <div class="macho-panel" id="macho-panel">
+                <div class="macho-panel-header">
+                    <h3>Regra MACHO</h3>
+                    <button class="btn-close-panel" onclick="toggleMachoPanel()">✕</button>
+                </div>
+                <p class="macho-subtitle">Ordem para equilibrar equações</p>
+                <table class="macho-table">
+                    <thead>
+                        <tr>
+                            <th>Letra</th>
+                            <th>Elemento</th>
+                            <th>Dica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>M</strong></td>
+                            <td>Metal</td>
+                            <td>Equilibre os metais primeiro</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A</strong></td>
+                            <td>Ametal</td>
+                            <td>Depois equilibre os ametais</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>Carbono</td>
+                            <td>Em seguida, o carbono</td>
+                        </tr>
+                        <tr>
+                            <td><strong>H</strong></td>
+                            <td>Hidrogênio</td>
+                            <td>Depois o hidrogênio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>O</strong></td>
+                            <td>Oxigênio</td>
+                            <td>Por último, o oxigênio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="modal-final">
+        <div class="modal-content">
+            <h2>Fim de Jogo!</h2>
+            <div class="final-stats">
+                <p>Pontuação Final: <span id="final-score">0</span></p>
+                <p>Reações Acertadas: <span id="final-total-correct">0</span></p>
+                <p>Tempo Total: <span id="total-time">0:00</span></p>
+            </div>
+            <button class="btn btn-play" onclick="showDifficultyPopup()">Jogar Novamente</button>
+            <a href="../index.html" class="btn btn-back">Voltar ao Hub</a>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

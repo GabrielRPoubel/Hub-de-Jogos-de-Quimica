@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Ligações</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">← VOLTAR AO HUB</a>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="periodic-popup" id="periodic-popup">
+        <div class="periodic-popup-content">
+            <div class="periodic-popup-header">
+                <h3>TABELA PERIÓDICA</h3>
+                <button class="btn-close-panel" onclick="togglePeriodicPopup()">✕</button>
+            </div>
+            <div class="periodic-table" id="periodic-table"></div>
+        </div>
+    </div>
+    
+    <div class="difficulty-popup" id="difficulty-popup">
+        <h2>TIPOS DE LIGAÇÕES</h2>
+        <div class="difficulty-options">
+            <button class="btn btn-difficulty easy" onclick="selectDifficulty('facil')">
+                <span class="diff-icon">🌱</span>
+                <span class="diff-name">FÁCIL</span>
+            </button>
+            <button class="btn btn-difficulty medium" onclick="selectDifficulty('medio')">
+                <span class="diff-icon">⚡</span>
+                <span class="diff-name">MÉDIO</span>
+            </button>
+            <button class="btn btn-difficulty hard" onclick="selectDifficulty('dificil')">
+                <span class="diff-icon">🔥</span>
+                <span class="diff-name">DIFÍCIL</span>
+            </button>
+        </div>
+    </div>
+
+    <header id="game-header">
+        <h1>TIPOS DE LIGAÇÕES</h1>
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-label">PONTUAÇÃO</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">QUESTÃO</span>
+                <span class="stat-value" id="timer">--:--</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">TEMPO TOTAL</span>
+                <span class="stat-value" id="game-timer">0:00</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">ACERTOS</span>
+                <span class="stat-value" id="correct-count">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">ERROS</span>
+                <span class="stat-value" id="errors-count">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">DIFICULDADE</span>
+                <span class="stat-value" id="difficulty-label">-</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="game-main">
+        <div class="game-container">
+            <div class="game-area">
+                <button class="info-btn" id="info-btn" onclick="togglePeriodicPopup()">ℹ️</button>
+
+                <div class="equation-display" id="equation-display"></div>
+
+                <div class="bond-options" id="bond-options"></div>
+
+                <div class="controls">
+                    <button class="btn btn-skip" onclick="skipQuestion()">PULAR</button>
+                </div>
+
+                <div class="message" id="message"></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="modal-final">
+        <div class="modal-content">
+            <h2>FIM DE JOGO!</h2>
+            <div class="final-stats">
+                <p>PONTUAÇÃO FINAL: <span id="final-score">0</span></p>
+                <p>REAÇÕES ACERTADAS: <span id="final-total-correct">0</span></p>
+                <p>TEMPO TOTAL: <span id="total-time">0:00</span></p>
+            </div>
+            <button class="btn btn-play" onclick="showDifficultyPopup()">JOGAR NOVAMENTE</button>
+            <a href="../index.html" class="btn btn-back">VOLTAR AO HUB</a>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

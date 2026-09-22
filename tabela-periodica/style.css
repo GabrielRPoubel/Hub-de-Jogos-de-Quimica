@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding: 1rem;
+}
+
+.back-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    color: #a0a0a0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    z-index: 100;
+}
+
+.back-link:hover {
+    color: #e94560;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #e94560, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+}
+
+main {
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-color.metal {
+    background: rgba(78, 205, 196, 0.5);
+    border: 1px solid #4ecdc4;
+}
+
+.legend-color.nonmetal {
+    background: rgba(233, 69, 96, 0.5);
+    border: 1px solid #e94560;
+}
+
+.legend-color.metalloid {
+    background: rgba(255, 193, 7, 0.5);
+    border: 1px solid #ffc107;
+}
+
+.periodic-container {
+    overflow-x: auto;
+    padding: 0.5rem;
+}
+
+.periodic-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.periodic-table td {
+    padding: 6px 4px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 65px;
+    vertical-align: top;
+}
+
+.periodic-table td:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+.periodic-table td.metal {
+    border-color: rgba(78, 205, 196, 0.5);
+    background: rgba(78, 205, 196, 0.1);
+}
+
+.periodic-table td.metal:hover {
+    background: rgba(78, 205, 196, 0.3);
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+}
+
+.periodic-table td.nonmetal {
+    border-color: rgba(233, 69, 96, 0.5);
+    background: rgba(233, 69, 96, 0.1);
+}
+
+.periodic-table td.nonmetal:hover {
+    background: rgba(233, 69, 96, 0.3);
+    box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+}
+
+.periodic-table td.metalloid {
+    border-color: rgba(255, 193, 7, 0.5);
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.periodic-table td.metalloid:hover {
+    background: rgba(255, 193, 7, 0.3);
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+}
+
+.periodic-table td.empty {
+    background: transparent;
+    border-color: transparent;
+    cursor: default;
+}
+
+.periodic-table td.empty:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.periodic-table td.separator {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    font-size: 0.7rem;
+    color: #a0a0a0;
+    cursor: default;
+}
+
+.periodic-table td.separator:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.periodic-table td.placeholder {
+    font-size: 0.7rem;
+    cursor: default;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.periodic-table td.placeholder.lan {
+    background: rgba(78, 205, 196, 0.3);
+    border-color: rgba(78, 205, 196, 0.5);
+    color: #4ecdc4;
+}
+
+.periodic-table td.placeholder.act {
+    background: rgba(255, 193, 7, 0.3);
+    border-color: rgba(255, 193, 7, 0.5);
+    color: #ffc107;
+}
+
+.periodic-table td.placeholder small {
+    font-size: 0.55rem;
+    font-weight: normal;
+}
+
+.periodic-table td.placeholder:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.element .atomic-number {
+    font-size: 0.6rem;
+    color: #a0a0a0;
+}
+
+.element .symbol {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.element .name {
+    font-size: 0.5rem;
+    color: #a0a0a0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.element .mass {
+    font-size: 0.5rem;
+    color: #666;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+}
+
+.overlay.show {
+    display: block;
+}
+
+.element-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1a2e;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    z-index: 999;
+    min-width: 400px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.element-popup.show {
+    display: block;
+}
+
+.btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.element-popup h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #e94560, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+}
+
+.popup-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.popup-item {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.popup-label {
+    display: block;
+    font-size: 0.65rem;
+    color: #a0a0a0;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+
+.popup-value {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.popup-value.metal {
+    color: #4ecdc4;
+}
+
+.popup-value.nonmetal {
+    color: #e94560;
+}
+
+.popup-value.metalloid {
+    color: #ffc107;
+}
+
+.popup-config {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+}
+
+.popup-desc {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.popup-desc p {
+    margin-top: 0.5rem;
+    color: #a0a0a0;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    
+    .periodic-table td {
+        min-width: 45px;
+        padding: 4px 2px;
+    }
+    
+    .element .atomic-number {
+        font-size: 0.5rem;
+    }
+    
+    .element .symbol {
+        font-size: 0.8rem;
+    }
+    
+    .element .name {
+        font-size: 0.4rem;
+    }
+    
+    .element .mass {
+        font-size: 0.4rem;
+    }
+    
+    .popup-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .element-popup {
+        min-width: 300px;
+    }
+}

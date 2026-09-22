@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Periódica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">← VOLTAR AO HUB</a>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="element-popup" id="element-popup">
+        <button class="btn-close" onclick="closePopup()">✕</button>
+        <h2 id="popup-title"></h2>
+        <div id="popup-content"></div>
+    </div>
+
+    <header>
+        <h1>TABELA PERIÓDICA</h1>
+        <p class="subtitle">Referência completa dos elementos químicos</p>
+    </header>
+
+    <main>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-color metal"></span>
+                <span>Metal</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color nonmetal"></span>
+                <span>Ametal</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color metalloid"></span>
+                <span>Metalóide</span>
+            </div>
+        </div>
+
+        <div class="periodic-container">
+            <table class="periodic-table" id="periodic-table"></table>
+        </div>
+    </main>
+
+    <script>
+        const elements = [
+            {n:1,s:"H",name:"Hidrogênio",mass:"1,008",group:1,period:1,type:"nonmetal",config:"1s¹",desc:"Elemento mais leve e abundante do universo. Gasoso, incolor, inodoro."},
+            {n:2,s:"He",name:"Hélio",mass:"4,003",group:18,period:1,type:"nonmetal",config:"1s²",desc:"Gasoso nobre, inerte. Usado em balões e resfriamento de imãs."},
+            {n:3,s:"Li",name:"Lítio",mass:"6,941",group:1,period:2,type:"metal",config:"[He] 2s¹",desc:"Metal alcalino mais leve. Usado em baterias e tratamento bipolar."},
+            {n:4,s:"Be",name:"Berílio",mass:"9,012",group:2,period:2,type:"metal",config:"[He] 2s²",desc:"Metal leve e resistente. Usado em ligas aerospaciais."},
+            {n:5,s:"B",name:"Boro",mass:"10,81",group:13,period:2,type:"metalloid",config:"[He] 2s² 2p¹",desc:"Metalóide usado em vidros e detergentes."},
+            {n:6,s:"C",name:"Carbono",mass:"12,01",group:14,period:2,type:"nonmetal",config:"[He] 2s² 2p²",desc:"Base da química orgânica. Existe como diamante, grafite e grafeno."},
+            {n:7,s:"N",name:"Nitrogênio",mass:"14,01",group:15,period:2,type:"nonmetal",config:"[He] 2s² 2p³",desc:"Gasoso que forma 78% da atmosfera. Essencial para vida."},
+            {n:8,s:"O",name:"Oxigênio",mass:"16,00",group:16,period:2,type:"nonmetal",config:"[He] 2s² 2p⁴",desc:"Gasoso essencial para respiração e combustão."},
+            {n:9,s:"F",name:"Flúor",mass:"19,00",group:17,period:2,type:"nonmetal",config:"[He] 2s² 2p⁵",desc:"Halogênio mais eletronegativo. Usado em pasta de dente."},
+            {n:10,s:"Ne",name:"Neônio",mass:"20,18",group:18,period:2,type:"nonmetal",config:"[He] 2s² 2p⁶",desc:"Gas nobre. Usado em letreiros luminosos."},
+            {n:11,s:"Na",name:"Sódio",mass:"22,99",group:1,period:3,type:"metal",config:"[Ne] 3s¹",desc:"Metal alcalino macio. Essencial para organismos vivos."},
+            {n:12,s:"Mg",name:"Magnésio",mass:"24,31",group:2,period:3,type:"metal",config:"[Ne] 3s²",desc:"Metal leve e resistente. Usado em ligas e fogos de artifício."},
+            {n:13,s:"Al",name:"Alumínio",mass:"26,98",group:13,period:3,type:"metal",config:"[Ne] 3s² 3p¹",desc:"Metal leve, resistente à corrosão. Usado em embalagens."},
+            {n:14,s:"Si",name:"Silício",mass:"28,09",group:14,period:3,type:"metalloid",config:"[Ne] 3s² 3p²",desc:"Metalóide semiconductor. Base da eletrônica moderna."},
+            {n:15,s:"P",name:"Fósforo",mass:"30,97",group:15,period:3,type:"nonmetal",config:"[Ne] 3s² 3p³",desc:"Essencial para DNA e ATP. Existente em fósforos."},
+            {n:16,s:"S",name:"Enxofre",mass:"32,07",group:16,period:3,type:"nonmetal",config:"[Ne] 3s² 3p⁴",desc:"Amarelo, queima com chama azul. Usado em vulcanização."},
+            {n:17,s:"Cl",name:"Cloro",mass:"35,45",group:17,period:3,type:"nonmetal",config:"[Ne] 3s² 3p⁵",desc:"Halogênio gasoso. Usado em desinfecção e PVC."},
+            {n:18,s:"Ar",name:"Argônio",mass:"39,95",group:18,period:3,type:"nonmetal",config:"[Ne] 3s² 3p⁶",desc:"Gas nobre. Usado em soldagem e iluminação."},
+            {n:19,s:"K",name:"Potássio",mass:"39,10",group:1,period:4,type:"metal",config:"[Ar] 4s¹",desc:"Metal alcalino essencial para nervos e músculos."},
+            {n:20,s:"Ca",name:"Cálcio",mass:"40,08",group:2,period:4,type:"metal",config:"[Ar] 4s²",desc:"Metal alcalino-terroso. Essencial para ossos e dentes."},
+            {n:21,s:"Sc",name:"Escândio",mass:"44,96",group:3,period:4,type:"metal",config:"[Ar] 3d¹ 4s²",desc:"Metal de transição raro. Usado em ligas leves."},
+            {n:22,s:"Ti",name:"Titânio",mass:"47,87",group:4,period:4,type:"metal",config:"[Ar] 3d² 4s²",desc:"Metal leve, resistente e biocompatível. Usado em próteses."},
+            {n:23,s:"V",name:"Vanádio",mass:"50,94",group:5,period:4,type:"metal",config:"[Ar] 3d³ 4s²",desc:"Metal de transição. Usado em ligas de aço."},
+            {n:24,s:"Cr",name:"Cromo",mass:"52,00",group:6,period:4,type:"metal",config:"[Ar] 3d⁵ 4s¹",desc:"Metal duro e resistente. Usado em cromagem."},
+            {n:25,s:"Mn",name:"Manganês",mass:"54,94",group:7,period:4,type:"metal",config:"[Ar] 3d⁵ 4s²",desc:"Metal de transição. Essencial em ligas de aço."},
+            {n:26,s:"Fe",name:"Ferro",mass:"55,85",group:8,period:4,type:"metal",config:"[Ar] 3d⁶ 4s²",desc:"Metal mais usado no mundo. Base do aço."},
+            {n:27,s:"Co",name:"Cobalto",mass:"58,93",group:9,period:4,type:"metal",config:"[Ar] 3d⁷ 4s²",desc:"Metal magnético. Usado em imãs e baterias."},
+            {n:28,s:"Ni",name:"Níquel",mass:"58,69",group:10,period:4,type:"metal",config:"[Ar] 3d⁸ 4s²",desc:"Metal resistente à corrosão. Usado em moedas."},
+            {n:29,s:"Cu",name:"Cobre",mass:"63,55",group:11,period:4,type:"metal",config:"[Ar] 3d¹⁰ 4s¹",desc:"Metal excelente condutor. Usado em fios elétricos."},
+            {n:30,s:"Zn",name:"Zinco",mass:"65,38",group:12,period:4,type:"metal",config:"[Ar] 3d¹⁰ 4s²",desc:"Metal resistente. Usado em galvanização e pilhas."},
+            {n:31,s:"Ga",name:"Gálio",mass:"69,72",group:13,period:4,type:"metal",config:"[Ar] 3d¹⁰ 4s² 4p¹",desc:"Metal que derrete na mão. Usado em semicondutores."},
+            {n:32,s:"Ge",name:"Germânio",mass:"72,63",group:14,period:4,type:"metalloid",config:"[Ar] 3d¹⁰ 4s² 4p²",desc:"Metalóide semiconductor. Usado em fibra óptica."},
+            {n:33,s:"As",name:"Arsênio",mass:"74,92",group:15,period:4,type:"metalloid",config:"[Ar] 3d¹⁰ 4s² 4p³",desc:"Metalóide tóxico. Usado em semicondutores."},
+            {n:34,s:"Se",name:"Selênio",mass:"78,96",group:16,period:4,type:"nonmetal",config:"[Ar] 3d¹⁰ 4s² 4p⁴",desc:"Não-metal essencial em traços. Usado em eletrônica."},
+            {n:35,s:"Br",name:"Bromo",mass:"79,90",group:17,period:4,type:"nonmetal",config:"[Ar] 3d¹⁰ 4s² 4p⁵",desc:"Líquido à temperatura ambiente. Usado em retardantes de chama."},
+            {n:36,s:"Kr",name:"Criptônio",mass:"83,80",group:18,period:4,type:"nonmetal",config:"[Ar] 3d¹⁰ 4s² 4p⁶",desc:"Gas nobre. Usado em iluminação e lasers."},
+            {n:37,s:"Rb",name:"Rubídio",mass:"85,47",group:1,period:5,type:"metal",config:"[Kr] 5s¹",desc:"Metal alcalino macio. Reage violentamente com água."},
+            {n:38,s:"Sr",name:"Estrôncio",mass:"87,62",group:2,period:5,type:"metal",config:"[Kr] 5s²",desc:"Metal alcalino-terroso. Usado em fogos de artifício."},
+            {n:39,s:"Y",name:"Ítrio",mass:"88,91",group:3,period:5,type:"metal",config:"[Kr] 4d¹ 5s²",desc:"Metal de transição. Usado em supercondutores."},
+            {n:40,s:"Zr",name:"Zircônio",mass:"91,22",group:4,period:5,type:"metal",config:"[Kr] 4d² 5s²",desc:"Metal resistente à corrosão. Usado em reatores nucleares."},
+            {n:41,s:"Nb",name:"Nióbio",mass:"92,91",group:5,period:5,type:"metal",config:"[Kr] 4d⁴ 5s¹",desc:"Metal supercondutor. Usado em ímãs de MRI."},
+            {n:42,s:"Mo",name:"Molibdênio",mass:"95,94",group:6,period:5,type:"metal",config:"[Kr] 4d⁵ 5s¹",desc:"Metal refratário. Usado em ligas de alta resistência."},
+            {n:43,s:"Tc",name:"Tecneto",mass:"(98)",group:7,period:5,type:"metal",config:"[Kr] 4d⁵ 5s²",desc:"Elemento radioativo artificial. Usado em medicina nuclear."},
+            {n:44,s:"Ru",name:"Rutênio",mass:"101,1",group:8,period:5,type:"metal",config:"[Kr] 4d⁷ 5s¹",desc:"Metal de transição raro. Usado em catalisadores."},
+            {n:45,s:"Rh",name:"Ródio",mass:"102,9",group:9,period:5,type:"metal",config:"[Kr] 4d⁸ 5s¹",desc:"Metal precioso. Usado em catalisadores de automóveis."},
+            {n:46,s:"Pd",name:"Paládio",mass:"106,4",group:10,period:5,type:"metal",config:"[Kr] 4d¹⁰",desc:"Metal precioso. Usado em catalisadores e joias."},
+            {n:47,s:"Ag",name:"Prata",mass:"107,9",group:11,period:5,type:"metal",config:"[Kr] 4d¹⁰ 5s¹",desc:"Metal precioso. Melhor condutor elétrico."},
+            {n:48,s:"Cd",name:"Cádmio",mass:"112,4",group:12,period:5,type:"metal",config:"[Kr] 4d¹⁰ 5s²",desc:"Metal tóxico. Usado em baterias NiCd."},
+            {n:49,s:"In",name:"Índio",mass:"114,8",group:13,period:5,type:"metal",config:"[Kr] 4d¹⁰ 5s² 5p¹",desc:"Metal mole. Usado em telas touch screen."},
+            {n:50,s:"Sn",name:"Estanho",mass:"118,7",group:14,period:5,type:"metal",config:"[Kr] 4d¹⁰ 5s² 5p²",desc:"Metal maleável. Usado em soldas e latão."},
+            {n:51,s:"Sb",name:"Antimônio",mass:"121,8",group:15,period:5,type:"metalloid",config:"[Kr] 4d¹⁰ 5s² 5p³",desc:"Metalóide. Usado em ligas e retardantes de chama."},
+            {n:52,s:"Te",name:"Telúrio",mass:"127,6",group:16,period:5,type:"metalloid",config:"[Kr] 4d¹⁰ 5s² 5p⁴",desc:"Metalóide semicondutor. Usado em painéis solares."},
+            {n:53,s:"I",name:"Iodo",mass:"126,9",group:17,period:5,type:"nonmetal",config:"[Kr] 4d¹⁰ 5s² 5p⁵",desc:"Halogênio. Essencial para tireoide. Usado em desinfecção."},
+            {n:54,s:"Xe",name:"Xenônio",mass:"131,3",group:18,period:5,type:"nonmetal",config:"[Kr] 4d¹⁰ 5s² 5p⁶",desc:"Gas nobre. Usado em faróis de automóveis."},
+            {n:55,s:"Cs",name:"Césio",mass:"132,9",group:1,period:6,type:"metal",config:"[Xe] 6s¹",desc:"Metal alcalino. Usado em relógios atômicos."},
+            {n:56,s:"Ba",name:"Bário",mass:"137,3",group:2,period:6,type:"metal",config:"[Xe] 6s²",desc:"Metal alcalino-terroso. Usado em exames de raio-X."},
+            {n:57,s:"La",name:"Lantânio",mass:"138,9",group:3,period:6,type:"metal",config:"[Xe] 5d¹ 6s²",desc:"Metal de transição. Primeiro dos lantanídeos.",block:"lan"},
+            {n:58,s:"Ce",name:"Cerio",mass:"140,1",group:0,period:6,type:"metal",config:"[Xe] 4f¹ 5d¹ 6s²",desc:"Lantanídeo mais abundante. Usado em catalisadores.",block:"lan"},
+            {n:59,s:"Pr",name:"Praseodímio",mass:"140,9",group:0,period:6,type:"metal",config:"[Xe] 4f³ 6s²",desc:"Lantanídeo. Usado em ímãs e vidros coloridos.",block:"lan"},
+            {n:60,s:"Nd",name:"Neodímio",mass:"144,2",group:0,period:6,type:"metal",config:"[Xe] 4f⁴ 6s²",desc:"Lantanídeo. Usado em ímãs superfortes NdFeB.",block:"lan"},
+            {n:61,s:"Pm",name:"Promécio",mass:"(145)",group:0,period:6,type:"metal",config:"[Xe] 4f⁵ 6s²",desc:"Lantanídeo radioativo. Usado em baterias nucleares.",block:"lan"},
+            {n:62,s:"Sm",name:"Samário",mass:"150,4",group:0,period:6,type:"metal",config:"[Xe] 4f⁶ 6s²",desc:"Lantanídeo. Usado em ímãs SmCo.",block:"lan"},
+            {n:63,s:"Eu",name:"Európio",mass:"152,0",group:0,period:6,type:"metal",config:"[Xe] 4f⁷ 6s²",desc:"Lantanídeo. Usado em telas LCD e lâmpadas fluorescentes.",block:"lan"},
+            {n:64,s:"Gd",name:"Gadolínio",mass:"157,3",group:0,period:6,type:"metal",config:"[Xe] 4f⁷ 5d¹ 6s²",desc:"Lantanídeo. Usado em contraste de ressonância magnética.",block:"lan"},
+            {n:65,s:"Tb",name:"Térbio",mass:"158,9",group:0,period:6,type:"metal",config:"[Xe] 4f⁹ 6s²",desc:"Lantanídeo. Usado em dispositivos eletrônicos.",block:"lan"},
+            {n:66,s:"Dy",name:"Disprósio",mass:"162,5",group:0,period:6,type:"metal",config:"[Xe] 4f¹⁰ 6s²",desc:"Lantanídeo. Usado em ímãs de alta temperatura.",block:"lan"},
+            {n:67,s:"Ho",name:"Hólmio",mass:"164,9",group:0,period:6,type:"metal",config:"[Xe] 4f¹¹ 6s²",desc:"Lantanídeo. Usado em ímãs e poles de laser.",block:"lan"},
+            {n:68,s:"Er",name:"Érbio",mass:"167,3",group:0,period:6,type:"metal",config:"[Xe] 4f¹² 6s²",desc:"Lantanídeo. Usado em fibras ópticas e lasers.",block:"lan"},
+            {n:69,s:"Tm",name:"Túlio",mass:"168,9",group:0,period:6,type:"metal",config:"[Xe] 4f¹³ 6s²",desc:"Lantanídeo mais raro. Usado em equipamentos portáteis.",block:"lan"},
+            {n:70,s:"Yb",name:"Itérbio",mass:"173,0",group:0,period:6,type:"metal",config:"[Xe] 4f¹⁴ 6s²",desc:"Lantanídeo. Usado em aços inoxidáveis e lasers.",block:"lan"},
+            {n:71,s:"Lu",name:"Lutécio",mass:"175,0",group:3,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹ 6s²",desc:"Lantanídeo mais pesado. Usado em PET扫描.",block:"lan"},
+            {n:72,s:"Hf",name:"Háfnio",mass:"178,5",group:4,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d² 6s²",desc:"Metal de transição. Usado em reatores nucleares."},
+            {n:73,s:"Ta",name:"Tântalo",mass:"180,9",group:5,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d³ 6s²",desc:"Metal resistente. Usado em capacitores eletrônicos."},
+            {n:74,s:"W",name:"Tungstênio",mass:"183,8",group:6,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d⁴ 6s²",desc:"Metal com maior ponto de fusão. Usado em filamentos."},
+            {n:75,s:"Re",name:"Rênio",mass:"186,2",group:7,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d⁵ 6s²",desc:"Metal raro. Usado em ligas de jatos."},
+            {n:76,s:"Os",name:"Ósmio",mass:"190,2",group:8,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d⁶ 6s²",desc:"Metal mais denso. Usado em pontas de canetas."},
+            {n:77,s:"Ir",name:"Irídio",mass:"192,2",group:9,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d⁷ 6s²",desc:"Metal muito duro. Usado em velas de bugigangas."},
+            {n:78,s:"Pt",name:"Platina",mass:"195,1",group:10,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d⁹ 6s¹",desc:"Metal precioso. Usado em joias e catalisadores."},
+            {n:79,s:"Au",name:"Ouro",mass:"197,0",group:11,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s¹",desc:"Metal precioso. Usado em joias e eletrônica."},
+            {n:80,s:"Hg",name:"Mercúrio",mass:"200,6",group:12,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s²",desc:"Único metal líquido à temperatura ambiente."},
+            {n:81,s:"Tl",name:"Tálio",mass:"204,4",group:13,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹",desc:"Metal tóxico. Usado em detectores de radiação."},
+            {n:82,s:"Pb",name:"Chumbo",mass:"207,2",group:14,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²",desc:"Metal pesado. Usado em baterias e blindagem."},
+            {n:83,s:"Bi",name:"Bismuto",mass:"209,0",group:15,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³",desc:"Metal frágil. Usado em medicamentos e cosméticos."},
+            {n:84,s:"Po",name:"Polônio",mass:"(209)",group:16,period:6,type:"metal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴",desc:"Elemento radioativo. Descoberto por Marie Curie."},
+            {n:85,s:"At",name:"Astato",mass:"(210)",group:17,period:6,type:"nonmetal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵",desc:"Halogênio radioativo. Muito raro na natureza."},
+            {n:86,s:"Rn",name:"Radônio",mass:"(222)",group:18,period:6,type:"nonmetal",config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶",desc:"Gas nobre radioativo. Perigoso em ambientes fechados."},
+            {n:87,s:"Fr",name:"Frâncio",mass:"(223)",group:1,period:7,type:"metal",config:"[Rn] 7s¹",desc:"Metal alcalino radioativo. Muito instável."},
+            {n:88,s:"Ra",name:"Rádio",mass:"(226)",group:2,period:7,type:"metal",config:"[Rn] 7s²",desc:"Metal alcalino-terroso radioativo. Descoberto por Curie."},
+            {n:89,s:"Ac",name:"Actínio",mass:"(227)",group:3,period:7,type:"metal",config:"[Rn] 6d¹ 7s²",desc:"Metal radioativo. Primeiro dos actinídeos.",block:"act"},
+            {n:90,s:"Th",name:"Tório",mass:"232,0",group:0,period:7,type:"metal",config:"[Rn] 6d² 7s²",desc:"Actinídeo. Potencial combustível nuclear.",block:"act"},
+            {n:91,s:"Pa",name:"Protactínio",mass:"231,0",group:0,period:7,type:"metal",config:"[Rn] 5f² 6d¹ 7s²",desc:"Actinídeo radioativo. Muito raro.",block:"act"},
+            {n:92,s:"U",name:"Urânio",mass:"238,0",group:0,period:7,type:"metal",config:"[Rn] 5f³ 6d¹ 7s²",desc:"Actinídeo. Usado como combustível nuclear.",block:"act"},
+            {n:93,s:"Np",name:"Neptúnio",mass:"(237)",group:0,period:7,type:"metal",config:"[Rn] 5f⁴ 6d¹ 7s²",desc:"Actinídeo radioativo. Primeiro transurânio.",block:"act"},
+            {n:94,s:"Pu",name:"Plutônio",mass:"(244)",group:0,period:7,type:"metal",config:"[Rn] 5f⁶ 7s²",desc:"Actinídeo radioativo. Usado em armas e naves espaciais.",block:"act"},
+            {n:95,s:"Am",name:"Américio",mass:"(243)",group:0,period:7,type:"metal",config:"[Rn] 5f⁷ 7s²",desc:"Actinídeo radioativo. Usado em detectores de fumaça.",block:"act"},
+            {n:96,s:"Cm",name:"Curio",mass:"(247)",group:0,period:7,type:"metal",config:"[Rn] 5f⁷ 6d¹ 7s²",desc:"Actinídeo radioativo. Descoberto pelos Curie.",block:"act"},
+            {n:97,s:"Bk",name:"Berkélio",mass:"(247)",group:0,period:7,type:"metal",config:"[Rn] 5f⁹ 7s²",desc:"Actinídeo radioativo. Sintetizado em laboratório.",block:"act"},
+            {n:98,s:"Cf",name:"Califórnio",mass:"(251)",group:0,period:7,type:"metal",config:"[Rn] 5f¹⁰ 7s²",desc:"Actinídeo radioativo. Usado em detectores de metais.",block:"act"},
+            {n:99,s:"Es",name:"Einsteinio",mass:"(252)",group:0,period:7,type:"metal",config:"[Rn] 5f¹¹ 7s²",desc:"Actinídeo radioativo. Descoberto em fallout nuclear.",block:"act"},
+            {n:100,s:"Fm",name:"Férmio",mass:"(257)",group:0,period:7,type:"metal",config:"[Rn] 5f¹² 7s²",desc:"Actinídeo radioativo. Sintetizado em laboratório.",block:"act"},
+            {n:101,s:"Md",name:"Mendelévio",mass:"(258)",group:0,period:7,type:"metal",config:"[Rn] 5f¹³ 7s²",desc:"Actinídeo radioativo. Nomeado em homenagem a Mendeleev.",block:"act"},
+            {n:102,s:"No",name:"Nobélio",mass:"(259)",group:0,period:7,type:"metal",config:"[Rn] 5f¹⁴ 7s²",desc:"Actinídeo radioativo. Nomeado em homenagem a Nobel.",block:"act"},
+            {n:103,s:"Lr",name:"Lawrencio",mass:"(262)",group:3,period:7,type:"metal",config:"[Rn] 5f¹⁴ 7s² 7p¹",desc:"Actinídeo radioativo. Último dos actinídeos.",block:"act"},
+            {n:104,s:"Rf",name:"Rutherfordium",mass:"(267)",group:4,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d² 7s²",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:105,s:"Db",name:"Dubnium",mass:"(268)",group:5,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d³ 7s²",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:106,s:"Sg",name:"Seaborgium",mass:"(271)",group:6,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁴ 7s²",desc:"Elemento superpesado. Nomeado em homenagem a Seaborg."},
+            {n:107,s:"Bh",name:"Bohrium",mass:"(272)",group:7,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁵ 7s²",desc:"Elemento superpesado. Nomeado em homenagem a Bohr."},
+            {n:108,s:"Hs",name:"Hassium",mass:"(270)",group:8,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁶ 7s²",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:109,s:"Mt",name:"Meitnerium",mass:"(276)",group:9,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁷ 7s²",desc:"Elemento superpesado. Nomeado em homenagem a Meitner."},
+            {n:110,s:"Ds",name:"Darmstadtium",mass:"(281)",group:10,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁸ 7s²",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:111,s:"Rg",name:"Roentgenium",mass:"(282)",group:11,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d⁹ 7s²",desc:"Elemento superpesado. Nomeado em homenagem a Roentgen."},
+            {n:112,s:"Cn",name:"Copernicium",mass:"(285)",group:12,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s²",desc:"Elemento superpesado. Nomeado em homenagem a Copérnico."},
+            {n:113,s:"Nh",name:"Nihonium",mass:"(286)",group:13,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹",desc:"Elemento superpesado. Sintetizado no Japão."},
+            {n:114,s:"Fl",name:"Flerovium",mass:"(289)",group:14,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:115,s:"Mc",name:"Moscovium",mass:"(290)",group:15,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:116,s:"Lv",name:"Livermorium",mass:"(293)",group:16,period:7,type:"metal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:117,s:"Ts",name:"Tennessine",mass:"(294)",group:17,period:7,type:"nonmetal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵",desc:"Elemento superpesado. Sintetizado em laboratório."},
+            {n:118,s:"Og",name:"Oganesson",mass:"(294)",group:18,period:7,type:"nonmetal",config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶",desc:"Elemento mais pesado conhecido. Sintetizado em laboratório."}
+        ];
+
+        function getElement(n) {
+            return elements.find(e => e.n === n);
+        }
+
+        function renderTable() {
+            const table = document.getElementById('periodic-table');
+            
+            const layout = [
+                [1,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+                [3,4,null,null,null,null,5,6,7,8,9,10,null,null,null,null,null,null],
+                [11,12,null,13,14,15,16,17,18,null,null,null,null,null,null,null,null,null],
+                [19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],
+                [37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54],
+                [55,56,"lan_placeholder",72,73,74,75,76,77,78,79,80,81,82,83,84,85,86],
+                [87,88,"act_placeholder",104,105,106,107,108,109,110,111,112,113,114,115,116,117,118],
+                [57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,null,null,null],
+                [89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,null,null,null]
+            ];
+            
+            let html = '';
+            layout.forEach((row, rowIdx) => {
+                html += '<tr>';
+                row.forEach((cell, colIdx) => {
+                    if (cell === null) {
+                        html += '<td class="empty"></td>';
+                    } else if (cell === "lan_placeholder") {
+                        html += '<td class="placeholder lan">57-71<br><small>Série dos<br>Lantanídeos</small></td>';
+                    } else if (cell === "act_placeholder") {
+                        html += '<td class="placeholder act">89-103<br><small>Série dos<br>Actinídeos</small></td>';
+                    } else {
+                        const el = getElement(cell);
+                        if (el) {
+                            html += `<td class="element ${el.type}" onclick="showPopup(${el.n})">
+                                <div class="atomic-number">${el.n}</div>
+                                <div class="symbol">${el.s}</div>
+                                <div class="name">${el.name}</div>
+                                <div class="mass">${el.mass}</div>
+                            </td>`;
+                        }
+                    }
+                });
+                html += '</tr>';
+            });
+            
+            table.innerHTML = html;
+        }
+        
+        function showPopup(n) {
+            const el = getElement(n);
+            if (!el) return;
+            
+            const typeLabels = {metal: 'Metal', nonmetal: 'Ametal', metalloid: 'Metalóide'};
+            
+            document.getElementById('popup-title').textContent = `${el.s} - ${el.name}`;
+            document.getElementById('popup-content').innerHTML = `
+                <div class="popup-grid">
+                    <div class="popup-item">
+                        <span class="popup-label">NÚMERO ATÔMICO</span>
+                        <span class="popup-value">${el.n}</span>
+                    </div>
+                    <div class="popup-item">
+                        <span class="popup-label">MASSA ATÔMICA</span>
+                        <span class="popup-value">${el.mass}</span>
+                    </div>
+                    <div class="popup-item">
+                        <span class="popup-label">TIPO</span>
+                        <span class="popup-value ${el.type}">${typeLabels[el.type]}</span>
+                    </div>
+                    <div class="popup-item">
+                        <span class="popup-label">GRUPO</span>
+                        <span class="popup-value">${el.group}</span>
+                    </div>
+                    <div class="popup-item">
+                        <span class="popup-label">PERÍODO</span>
+                        <span class="popup-value">${el.period}</span>
+                    </div>
+                </div>
+                <div class="popup-config">
+                    <span class="popup-label">CONFIGURAÇÃO ELETRÔNICA</span>
+                    <span class="popup-value">${el.config}</span>
+                </div>
+                <div class="popup-desc">
+                    <span class="popup-label">DESCRIÇÃO</span>
+                    <p>${el.desc}</p>
+                </div>
+            `;
+            
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('element-popup').classList.add('show');
+        }
+        
+        function closePopup() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('element-popup').classList.remove('show');
+        }
+        
+        renderTable();
+    </script>
+</body>
+</html>

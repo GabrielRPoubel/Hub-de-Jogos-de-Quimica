@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub de Jogos - Química dos Materiais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="difficulty-popup" id="difficulty-popup">
+        <h2 id="popup-title">Equilíbrio de Reações</h2>
+        <p class="popup-subtitle">Escolha a dificuldade</p>
+        <div class="difficulty-options">
+            <button class="btn btn-difficulty easy" onclick="startGame('facil')">
+                <span class="diff-icon">🌱</span>
+                <span class="diff-name">Fácil</span>
+            </button>
+            <button class="btn btn-difficulty medium" onclick="startGame('medio')">
+                <span class="diff-icon">⚡</span>
+                <span class="diff-name">Médio</span>
+            </button>
+            <button class="btn btn-difficulty hard" onclick="startGame('dificil')">
+                <span class="diff-icon">🔥</span>
+                <span class="diff-name">Difícil</span>
+            </button>
+        </div>
+        <button class="btn-close-popup" onclick="closePopup()">✕</button>
+    </div>
+
+    <header>
+        <h1>Química dos Materiais</h1>
+        <p class="subtitle">Hub de Jogos Interativos</p>
+    </header>
+
+    <main>
+        <div class="game-cards">
+            <div class="game-card" onclick="openPopup('jogo1')">
+                <div class="card-icon">⚖️</div>
+                <h2>Equilíbrio de Reações</h2>
+                <p>Balanceie equações químicas o mais rápido possível!</p>
+                <span class="difficulty">Fácil - Difícil</span>
+            </div>
+
+            <div class="game-card" onclick="openPopup('jogo2')">
+                <div class="card-icon">🔬</div>
+                <h2>Tipos de Ligações</h2>
+                <p>Identifique o tipo de ligação a partir da equação</p>
+                <span class="difficulty">Fácil - Difícil</span>
+            </div>
+
+            <a href="tabela-periodica/index.html" class="game-card reference-card">
+                <div class="card-icon">📊</div>
+                <h2>Tabela Periódica</h2>
+                <p>Referência completa dos elementos químicos</p>
+                <span class="difficulty reference">REFERÊNCIA</span>
+            </a>
+
+            <div class="game-card coming-soon">
+                <div class="card-icon">🧪</div>
+                <h2>Diagrama de Fases</h2>
+                <p>Interprete diagramas de equilíbrio</p>
+                <span class="difficulty">Em breve</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentGame = null;
+        
+        function openPopup(game) {
+            currentGame = game;
+            const title = document.getElementById('popup-title');
+            if (game === 'jogo1') {
+                title.textContent = 'EQUILÍBRIO DE REAÇÕES';
+            } else {
+                title.textContent = 'TIPOS DE LIGAÇÕES';
+            }
+            document.getElementById('difficulty-popup').classList.add('show');
+            document.getElementById('overlay').classList.add('show');
+        }
+        
+        function closePopup() {
+            document.getElementById('difficulty-popup').classList.remove('show');
+            document.getElementById('overlay').classList.remove('show');
+            currentGame = null;
+        }
+        
+        function startGame(diff) {
+            if (currentGame === 'jogo1') {
+                window.location.href = `jogo1-equilibrio/index.html?diff=${diff}`;
+            } else {
+                window.location.href = `jogo2-ligacoes/index.html?diff=${diff}`;
+            }
+        }
+        
+        document.getElementById('overlay').addEventListener('click', closePopup);
+    </script>
+</body>
+</html>
