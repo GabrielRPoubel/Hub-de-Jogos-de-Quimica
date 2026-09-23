@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../comum/estilos/base.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="../index.html" class="back-link">← Voltar ao Hub</a>
+    <a href="../index.html#jogos" class="back-link">← Voltar ao Hub</a>
     
     <div class="overlay" id="overlay"></div>
     
@@ -18,15 +22,15 @@
         <h2>Escolha a Dificuldade</h2>
         <div class="difficulty-options">
             <button class="btn btn-difficulty easy" onclick="selectDifficulty('facil')">
-                <span class="diff-icon">🌱</span>
+                <span class="icone diff-icone" data-icone="broto"></span>
                 <span class="diff-name">Fácil</span>
             </button>
             <button class="btn btn-difficulty medium" onclick="selectDifficulty('medio')">
-                <span class="diff-icon">⚡</span>
+                <span class="icone diff-icone" data-icone="raio"></span>
                 <span class="diff-name">Médio</span>
             </button>
             <button class="btn btn-difficulty hard" onclick="selectDifficulty('dificil')">
-                <span class="diff-icon">🔥</span>
+                <span class="icone diff-icone" data-icone="chama"></span>
                 <span class="diff-name">Difícil</span>
             </button>
         </div>
@@ -65,7 +69,7 @@
     <main id="game-main">
         <div class="game-container">
             <div class="game-area">
-                <button class="info-btn" id="info-btn" onclick="toggleMachoPanel()">ℹ️</button>
+                <button class="info-btn" id="info-btn" onclick="toggleMachoPanel()"><span class="icone" data-icone="info"></span></button>
 
                 <div class="equation-display" id="equation-display">
                     <!-- Equação desbalanceada aparece aqui -->
@@ -141,10 +145,11 @@
                 <p>Tempo Total: <span id="total-time">0:00</span></p>
             </div>
             <button class="btn btn-play" onclick="showDifficultyPopup()">Jogar Novamente</button>
-            <a href="../index.html" class="btn btn-back">Voltar ao Hub</a>
+            <a href="../index.html#jogos" class="btn btn-back">Voltar ao Hub</a>
         </div>
     </div>
 
+    <script src="../comum/icones/icones.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

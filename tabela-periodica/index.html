@@ -4,32 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela Periódica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../comum/estilos/base.css">
+    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="../index.html" class="back-link">← VOLTAR AO HUB</a>
+    <a href="../index.html#jogos" class="back-link">← VOLTAR AO HUB</a>
 
-    <header>
-        <h1>TABELA PERIÓDICA</h1>
-        <p class="subtitle">Clique em um elemento para ver os detalhes</p>
-    </header>
+    <h1 class="oculto-visual">Tabela Periódica</h1>
 
     <main>
-        <div class="legend" id="legend"></div>
+        <div class="barra-tabela">
+            <div class="modo-tabela" role="group" aria-label="Categoria de cores">
+                <button class="modo-botao ativo" id="cat-familias" onclick="definirCategoria('familias')">Famílias</button>
+                <button class="modo-botao" id="cat-eletronegatividade" onclick="definirCategoria('eletronegatividade')">Eletronegatividade</button>
+                <button class="modo-botao" id="cat-raio" onclick="definirCategoria('raio')">Raio atômico</button>
+                <button class="modo-botao" id="cat-ionizacao" onclick="definirCategoria('ionizacao')">Energia de ionização</button>
+            </div>
+            <div class="modo-tabela modo-tabela--sub" id="sub-familias" role="group" aria-label="Nível de detalhe das famílias">
+                <button class="modo-botao ativo" id="modo-simples" onclick="definirModo('simples')">Simples</button>
+                <button class="modo-botao" id="modo-completa" onclick="definirModo('completa')">Completa</button>
+            </div>
+            <button class="modo-botao modo-botao--original" id="botao-original" onclick="voltarOriginal()" title="Voltar à visualização original da tabela">
+                <span class="icone" data-icone="reiniciar"></span>
+                Original
+            </button>
+        </div>
 
-        <div class="table-scroll">
-            <div class="periodic-table" id="periodic-table"></div>
+        <div class="area-tabela">
+            <div id="periodic-table"></div>
         </div>
     </main>
 
-    <div class="overlay" id="overlay" onclick="closeDetails()"></div>
+    <script src="../comum/icones/icones.js"></script>
+    <script src="../comum/tabela-periodica/elements.js"></script>
+    <script src="../comum/tabela-periodica/tabela-periodica.js"></script>
+    <script>
+        TabelaPeriodica.montar('#periodic-table', {
+            modo: 'completa',
+            legenda: 'espaco',
+            detalhes: true,
+            classificacao: 'simples',
+            categoria: 'familias'
+        });
 
-    <aside class="details-panel" id="details-panel">
-        <button class="btn-close" onclick="closeDetails()">✕</button>
-        <div id="details-content"></div>
-    </aside>
+        const BOTOES_CATEGORIA = {
+            familias: 'cat-familias',
+            eletronegatividade: 'cat-eletronegatividade',
+            raio: 'cat-raio',
+            ionizacao: 'cat-ionizacao'
+        };
 
-    <script src="elements.js"></script>
-    <script src="app.js"></script>
+        let categoriaAtualPagina = 'familias';
+        let classificacaoAtualPagina = 'simples';
+
+        function atualizarBotoes() {
+            Object.keys(BOTOES_CATEGORIA).forEach(chave => {
+                document.getElementById(BOTOES_CATEGORIA[chave]).classList.toggle('ativo', chave === categoriaAtualPagina);
+            });
+            document.getElementById('sub-familias').hidden = categoriaAtualPagina !== 'familias';
+            document.getElementById('modo-simples').classList.toggle('ativo', classificacaoAtualPagina === 'simples');
+            document.getElementById('modo-completa').classList.toggle('ativo', classificacaoAtualPagina === 'completa');
+        }
+
+        function definirModo(classificacao) {
+            classificacaoAtualPagina = TabelaPeriodica.definirClassificacao(classificacao);
+            atualizarBotoes();
+        }
+
+        function definirCategoria(categoria) {
+            categoriaAtualPagina = TabelaPeriodica.definirCategoria(categoria);
+            atualizarBotoes();
+        }
+
+        function voltarOriginal() {
+            const estado = TabelaPeriodica.definirVisualizacao({ categoria: 'familias', classificacao: 'simples' });
+            categoriaAtualPagina = estado.categoria;
+            classificacaoAtualPagina = estado.classificacao;
+            atualizarBotoes();
+        }
+    </script>
 </body>
 </html>

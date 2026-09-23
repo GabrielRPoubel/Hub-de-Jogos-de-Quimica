@@ -3,90 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hub de Jogos - Química dos Materiais</title>
+    <title>QUIZZ — Química dos Materiais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="comum/estilos/base.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
-    
+
     <div class="difficulty-popup" id="difficulty-popup">
         <h2 id="popup-title">Equilíbrio de Reações</h2>
-        <p class="popup-subtitle">Escolha a dificuldade</p>
+        <p class="popup-subtitle">Escolha a dificuldade para começar</p>
         <div class="difficulty-options">
             <button class="btn btn-difficulty easy" onclick="startGame('facil')">
-                <span class="diff-icon">🌱</span>
+                <span class="icone diff-icone" data-icone="broto"></span>
                 <span class="diff-name">Fácil</span>
             </button>
             <button class="btn btn-difficulty medium" onclick="startGame('medio')">
-                <span class="diff-icon">⚡</span>
+                <span class="icone diff-icone" data-icone="raio"></span>
                 <span class="diff-name">Médio</span>
             </button>
             <button class="btn btn-difficulty hard" onclick="startGame('dificil')">
-                <span class="diff-icon">🔥</span>
+                <span class="icone diff-icone" data-icone="chama"></span>
                 <span class="diff-name">Difícil</span>
             </button>
         </div>
         <button class="btn-close-popup" onclick="closePopup()">✕</button>
     </div>
 
-    <header>
-        <h1>Química dos Materiais</h1>
-        <p class="subtitle">Hub de Jogos Interativos</p>
-    </header>
-
-    <main>
-        <div class="game-cards">
-            <div class="game-card" onclick="openPopup('jogo1')">
-                <div class="card-icon">⚖️</div>
-                <h2>Equilíbrio de Reações</h2>
-                <p>Balanceie equações químicas o mais rápido possível!</p>
-                <span class="difficulty">Fácil - Difícil</span>
+    <div class="palco" id="palco">
+        <header class="hero">
+        <div class="linha-titulo">
+            <div class="becker" id="becker" role="img" tabindex="0" aria-label="Becker de laboratório soltando bolhas">
+                <svg class="becker-svg" viewBox="0 0 120 170" aria-hidden="true">
+                    <path class="becker-liquido" d="M30 98 C42 92 54 104 66 98 S90 92 94 98 L94 138 Q94 152 80 152 L44 152 Q30 152 30 138 Z"/>
+                    <path class="becker-corpo" d="M30 20 L30 138 Q30 152 44 152 L80 152 Q94 152 94 138 L94 20"/>
+                    <path class="becker-borda" d="M24 20 H100"/>
+                    <path class="becker-bico" d="M30 20 C27 20 25 18 23 14"/>
+                    <path class="becker-marca" d="M94 58 H82"/>
+                    <path class="becker-marca" d="M94 78 H82"/>
+                    <path class="becker-marca" d="M94 98 H84"/>
+                </svg>
+                <div class="bolhas" id="bolhas" aria-hidden="true"></div>
             </div>
-
-            <div class="game-card" onclick="openPopup('jogo2')">
-                <div class="card-icon">🔬</div>
-                <h2>Tipos de Ligações</h2>
-                <p>Identifique o tipo de ligação a partir da equação</p>
-                <span class="difficulty">Fácil - Difícil</span>
-            </div>
-
-            <a href="tabela-periodica/index.html" class="game-card reference-card">
-                <div class="card-icon">📊</div>
-                <h2>Tabela Periódica</h2>
-                <p>Tabela interativa com propriedades dos elementos</p>
-                <span class="difficulty reference">REFERÊNCIA</span>
-            </a>
-
-            <div class="game-card coming-soon">
-                <div class="card-icon">🧪</div>
-                <h2>Diagrama de Fases</h2>
-                <p>Interprete diagramas de equilíbrio</p>
-                <span class="difficulty">Em breve</span>
-            </div>
+            <h1 class="titulo-quizz"><span class="qui">QUI</span><span class="zz">ZZ</span></h1>
         </div>
+        </header>
+
+        <div class="acoes">
+            <button class="btn btn-play botao-jogar" id="botao-jogar" aria-expanded="false" aria-controls="area-jogos" onclick="alternarJogos()">
+                <span class="icone" data-icone="jogar"></span>
+                <span id="rotulo-jogar">Jogar</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="area-jogos" id="area-jogos" hidden>
+        <div class="selecao-titulo">
+            <h2>Escolha seu jogo</h2>
+        </div>
+
+        <div class="carrossel">
+            <button class="carrossel-seta carrossel-seta--esq" id="seta-esq" onclick="moverCarrossel(-1)" aria-label="Jogo anterior">
+                <span class="icone" data-icone="seta-esq"></span>
+            </button>
+
+            <div class="carrossel-viewport" id="carrossel-viewport" tabindex="0" role="region" aria-label="Seleção de jogos">
+                <div class="carrossel-trilha" id="carrossel-trilha">
+                    <div class="jogo-card" role="button" tabindex="0" onclick="openPopup('jogo1')" onkeydown="ativarCard(evento, 'jogo1')">
+                        <span class="icone jogo-icone" data-icone="balanca"></span>
+                        <h3>Equilíbrio de Reações</h3>
+                    </div>
+
+                    <div class="jogo-card" role="button" tabindex="0" onclick="openPopup('jogo2')" onkeydown="ativarCard(evento, 'jogo2')">
+                        <span class="icone jogo-icone" data-icone="molecula"></span>
+                        <h3>Tipos de Ligações</h3>
+                    </div>
+
+                    <a class="jogo-card" href="tabela-periodica/index.html">
+                        <span class="icone jogo-icone" data-icone="grade"></span>
+                        <h3>Tabela Periódica</h3>
+                    </a>
+
+                    <div class="jogo-card jogo-card--breve" aria-disabled="true">
+                        <span class="icone jogo-icone" data-icone="diagrama"></span>
+                        <h3>Diagrama de Fases</h3>
+                    </div>
+
+                    <div class="carrossel-espaco" id="carrossel-espaco" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <button class="carrossel-seta carrossel-seta--dir" id="seta-dir" onclick="moverCarrossel(1)" aria-label="Próximo jogo">
+                <span class="icone" data-icone="seta-dir"></span>
+            </button>
+        </div>
+
+        <div class="carrossel-indicadores" id="carrossel-indicadores"></div>
+        <p class="carrossel-dica">Use as setas ← → do teclado ou arraste para navegar</p>
     </main>
 
+    <script src="comum/icones/icones.js"></script>
     <script>
         let currentGame = null;
-        
+
         function openPopup(game) {
             currentGame = game;
             const title = document.getElementById('popup-title');
             if (game === 'jogo1') {
-                title.textContent = 'EQUILÍBRIO DE REAÇÕES';
+                title.textContent = 'Equilíbrio de Reações';
             } else {
-                title.textContent = 'TIPOS DE LIGAÇÕES';
+                title.textContent = 'Tipos de Ligações';
             }
             document.getElementById('difficulty-popup').classList.add('show');
             document.getElementById('overlay').classList.add('show');
         }
-        
+
         function closePopup() {
             document.getElementById('difficulty-popup').classList.remove('show');
             document.getElementById('overlay').classList.remove('show');
             currentGame = null;
         }
-        
+
         function startGame(diff) {
             if (currentGame === 'jogo1') {
                 window.location.href = `jogo1-equilibrio/index.html?diff=${diff}`;
@@ -94,8 +134,153 @@
                 window.location.href = `jogo2-ligacoes/index.html?diff=${diff}`;
             }
         }
-        
+
+        function ativarCard(evento, jogo) {
+            if (evento.key === 'Enter' || evento.key === ' ') {
+                evento.preventDefault();
+                openPopup(jogo);
+            }
+        }
+
         document.getElementById('overlay').addEventListener('click', closePopup);
+
+        const viewport = document.getElementById('carrossel-viewport');
+        const trilha = document.getElementById('carrossel-trilha');
+        const cards = Array.from(trilha.querySelectorAll('.jogo-card'));
+        const espaco = document.getElementById('carrossel-espaco');
+        const indicadores = document.getElementById('carrossel-indicadores');
+        const setaEsq = document.getElementById('seta-esq');
+        const setaDir = document.getElementById('seta-dir');
+        let atual = 0;
+
+        cards.forEach((card, indice) => {
+            const ponto = document.createElement('button');
+            ponto.className = 'indicador';
+            ponto.setAttribute('aria-label', 'Ir para o jogo ' + (indice + 1));
+            ponto.addEventListener('click', () => irPara(indice));
+            indicadores.appendChild(ponto);
+        });
+
+        function irPara(indice) {
+            atual = Math.max(0, Math.min(cards.length - 1, indice));
+            viewport.scrollTo({ left: cards[atual].offsetLeft, behavior: 'smooth' });
+            atualizar();
+        }
+
+        function moverCarrossel(direcao) {
+            irPara(atual + direcao);
+        }
+
+        function atualizar() {
+            indicadores.querySelectorAll('.indicador').forEach((ponto, indice) => {
+                ponto.classList.toggle('ativo', indice === atual);
+            });
+            setaEsq.disabled = atual === 0;
+            setaDir.disabled = atual === cards.length - 1;
+        }
+
+        viewport.addEventListener('scroll', () => {
+            const passo = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1;
+            const indice = Math.max(0, Math.min(cards.length - 1, Math.round(viewport.scrollLeft / passo)));
+            if (indice !== atual) {
+                atual = indice;
+                atualizar();
+            }
+        }, { passive: true });
+
+        viewport.addEventListener('keydown', evento => {
+            if (evento.key === 'ArrowRight') {
+                evento.preventDefault();
+                moverCarrossel(1);
+            }
+            if (evento.key === 'ArrowLeft') {
+                evento.preventDefault();
+                moverCarrossel(-1);
+            }
+        });
+
+        function ajustarEspaco() {
+            const larguraCard = cards[0].offsetWidth;
+            espaco.style.width = Math.max(0, viewport.clientWidth - larguraCard - 10) + 'px';
+        }
+
+        window.addEventListener('resize', () => {
+            ajustarEspaco();
+            atualizar();
+        });
+
+        ajustarEspaco();
+        atualizar();
+
+        const areaJogos = document.getElementById('area-jogos');
+        const botaoJogar = document.getElementById('botao-jogar');
+        const rotuloJogar = document.getElementById('rotulo-jogar');
+        const palco = document.getElementById('palco');
+
+        function alternarJogos(rolar) {
+            const escondido = areaJogos.hasAttribute('hidden');
+            if (escondido) {
+                areaJogos.removeAttribute('hidden');
+                palco.classList.add('aberto');
+                botaoJogar.setAttribute('aria-expanded', 'true');
+                rotuloJogar.textContent = 'Fechar';
+                requestAnimationFrame(() => {
+                    ajustarEspaco();
+                    atualizar();
+                    if (rolar !== false) {
+                        areaJogos.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                });
+            } else {
+                areaJogos.setAttribute('hidden', '');
+                palco.classList.remove('aberto');
+                botaoJogar.setAttribute('aria-expanded', 'false');
+                rotuloJogar.textContent = 'Jogar';
+                palco.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        if (location.hash === '#jogos') {
+            alternarJogos(false);
+        }
+
+        const becker = document.getElementById('becker');
+        const bolhas = document.getElementById('bolhas');
+        let bolhaTimer = null;
+
+        function criarBolha() {
+            const bolha = document.createElement('span');
+            bolha.className = 'bolha';
+            const base = becker.clientWidth || 90;
+            const tamanho = Math.max(3, base * (0.07 + Math.random() * 0.08));
+            bolha.style.width = tamanho + 'px';
+            bolha.style.height = tamanho + 'px';
+            bolha.style.left = (24 + Math.random() * 52) + '%';
+            bolha.style.animationDuration = (1.1 + Math.random() * 0.9) + 's';
+            bolhas.appendChild(bolha);
+            setTimeout(() => bolha.remove(), 2400);
+        }
+
+        function soltarBolhas() {
+            if (bolhaTimer) return;
+            criarBolha();
+            bolhaTimer = setInterval(criarBolha, 170);
+        }
+
+        function pararBolhas() {
+            clearInterval(bolhaTimer);
+            bolhaTimer = null;
+        }
+
+        becker.addEventListener('mouseenter', soltarBolhas);
+        becker.addEventListener('mouseleave', pararBolhas);
+        becker.addEventListener('focus', soltarBolhas);
+        becker.addEventListener('blur', pararBolhas);
+        becker.addEventListener('click', () => {
+            for (let i = 0; i < 7; i++) {
+                setTimeout(criarBolha, i * 70);
+            }
+        });
     </script>
 </body>
 </html>
