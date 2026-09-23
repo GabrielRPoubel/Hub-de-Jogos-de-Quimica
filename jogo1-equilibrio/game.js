@@ -1,3 +1,4 @@
+/* ---------- [G1-01] banco de reações ---------- */
 const reactions = {
     facil: [
         { reactants: ['S', 'O2'], products: ['SO2'], balanced: [1, 1, 1], hint: 'Formação do dióxido de enxofre' },
@@ -280,6 +281,7 @@ const reactions = {
     ]
 };
 
+/* ---------- [G1-02] estado ---------- */
 let score = 0;
 let currentReaction = null;
 let correctAnswers = 0;
@@ -297,56 +299,33 @@ let gamePaused = false;
 let pausedTime = 0;
 let usedReactions = [];
 
+/* ---------- [G1-03] dificuldade ---------- */
 function selectDifficulty(diff) {
     difficulty = diff;
     errors = 0;
-    document.getElementById('difficulty-popup').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
-    document.getElementById('game-header').classList.add('show');
-    document.getElementById('game-main').classList.add('show');
     
     const labels = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' };
-    document.getElementById('difficulty-label').textContent = labels[diff];
-    
     const machoPanel = document.getElementById('macho-panel');
     machoPanel.classList.remove('blurred');
     machoPanel.classList.remove('show');
+    if (diff === 'dificil') machoPanel.classList.add('blurred');
     
-    if (diff === 'facil') {
-        gameDuration = null;
-        document.getElementById('timer').textContent = '∞';
-        document.getElementById('errors-count').textContent = '∞';
-    } else if (diff === 'medio') {
-        gameDuration = 600;
-        document.getElementById('timer').textContent = '10:00';
-        document.getElementById('errors-count').textContent = maxErrors;
-    } else {
-        gameDuration = 300;
-        document.getElementById('timer').textContent = '5:00';
-        document.getElementById('errors-count').textContent = '0';
-        machoPanel.classList.add('blurred');
-    }
-    
-    document.getElementById('game-timer').textContent = '0:00';
+    gameDuration = QuizBase.aplicarDificuldade(diff, labels[diff], maxErrors);
     startTimer();
     nextReaction();
 }
 
+/* ---------- [G1-04] popups de dificuldade ---------- */
 function showDifficultyPopup() {
-    clearInterval(timerInterval);
-    document.getElementById('modal-final').classList.remove('show');
-    document.getElementById('difficulty-popup').classList.add('show');
-    document.getElementById('overlay').classList.add('show');
-    document.getElementById('game-header').classList.remove('show');
-    document.getElementById('game-main').classList.remove('show');
+    QuizBase.abrirPopupDificuldade([timerInterval]);
     resetGame();
 }
 
 function closeDifficultyPopup() {
-    document.getElementById('difficulty-popup').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
+    QuizBase.fecharPopupDificuldade();
 }
 
+/* ---------- [G1-05] reset ---------- */
 function resetGame() {
     score = 0;
     correctAnswers = 0;
@@ -354,18 +333,13 @@ function resetGame() {
     hintsUsed = 0;
     hintedIndex = null;
     usedReactions = [];
-    document.getElementById('score').textContent = '0';
-    document.getElementById('correct-count').textContent = '0';
-    document.getElementById('errors-count').textContent = '-';
-    document.getElementById('timer').textContent = '--:--';
-    document.getElementById('game-timer').textContent = '0:00';
-    document.getElementById('difficulty-label').textContent = '-';
-    document.getElementById('message').textContent = '';
+    QuizBase.limparPlacar();
     document.getElementById('hints-area').innerHTML = '';
     document.getElementById('equation-display').innerHTML = '';
     document.getElementById('coefficients-area').innerHTML = '';
 }
 
+/* ---------- [G1-06] cronômetros ---------- */
 function startTimer() {
     gameStartTime = Date.now();
     pausedTime = 0;
@@ -401,22 +375,12 @@ function updateTimers() {
     }
 }
 
+/* ---------- [G1-07] sorteio de reação ---------- */
 function getRandomReaction() {
-    const available = reactions[difficulty];
-    const unused = available.filter((_, index) => !usedReactions.includes(index));
-    
-    if (unused.length === 0) {
-        usedReactions = [];
-        return available[Math.floor(Math.random() * available.length)];
-    }
-    
-    const randomIndex = Math.floor(Math.random() * unused.length);
-    const originalIndex = available.indexOf(unused[randomIndex]);
-    usedReactions.push(originalIndex);
-    
-    return unused[randomIndex];
+    return QuizBase.escolherReacao(reactions[difficulty], usedReactions);
 }
 
+/* ---------- [G1-08] renderização da equação ---------- */
 function renderEquation(reaction) {
     const display = document.getElementById('equation-display');
     display.innerHTML = '';
@@ -467,6 +431,7 @@ function renderCoefficientInputs(reaction) {
     document.getElementById('coeff-0').focus();
 }
 
+/* ---------- [G1-09] correção ---------- */
 function checkAnswer() {
     if (gamePaused) return;
 
@@ -532,6 +497,7 @@ function checkAnswer() {
     }
 }
 
+/* ---------- [G1-10] mensagens e dicas ---------- */
 function showMessage(text, type) {
     const messageEl = document.getElementById('message');
     messageEl.textContent = text;
@@ -591,6 +557,7 @@ function showHint() {
     showMessage(`Dica usada! -${hintsUsed * 20} pontos na próxima resposta`, 'hint');
 }
 
+/* ---------- [G1-11] avanço de questão ---------- */
 function skipQuestion() {
     gamePaused = true;
     const correctStr = currentReaction.balanced.join(', ');
@@ -613,6 +580,7 @@ function nextReaction() {
     document.getElementById('hints-area').innerHTML = '';
 }
 
+/* ---------- [G1-12] fim de jogo ---------- */
 function endGame() {
     clearInterval(timerInterval);
     const totalTime = Math.floor((Date.now() - gameStartTime) / 1000);
@@ -627,6 +595,7 @@ function endGame() {
     document.getElementById('modal-final').classList.add('show');
 }
 
+/* ---------- [G1-13] teclado e painel ---------- */
 function handleKeyPress(event) {
     if (event.key === 'Escape') {
         const popup = document.getElementById('difficulty-popup');
@@ -658,6 +627,7 @@ function toggleMachoPanel() {
     panel.classList.toggle('show');
 }
 
+/* ---------- [G1-14] inicialização ---------- */
 document.addEventListener('keydown', handleKeyPress);
 
 document.getElementById('overlay').addEventListener('click', closeDifficultyPopup);

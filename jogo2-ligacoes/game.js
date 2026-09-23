@@ -1,3 +1,4 @@
+/* ---------- [G2-01] banco de compostos ---------- */
 const reactions = {
     facil: [
         { equation: "\\ce{NaCl}", bond: "IÔNICA", hint: "Metal + Ametal", explanation: "Na (metal) + Cl (ametal) = ligação iônica" },
@@ -76,8 +77,10 @@ const reactions = {
     ]
 };
 
+/* ---------- [G2-02] tipos de ligação ---------- */
 const bondTypes = ["IÔNICA", "COVALENTE", "MISTA", "PONTE DE HIDROGÊNIO"];
 
+/* ---------- [G2-03] estado ---------- */
 let difficulty = null;
 let score = 0;
 let correctAnswers = 0;
@@ -94,6 +97,7 @@ let pausedTime = 0;
 let usedReactions = [];
 let spaceHandler = null;
 
+/* ---------- [G2-04] inicialização ---------- */
 document.addEventListener('DOMContentLoaded', () => {
     TabelaPeriodica.montar('#periodic-table', { modo: 'compacta', detalhes: false, legenda: '#periodic-legend' });
     const params = new URLSearchParams(window.location.search);
@@ -106,58 +110,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* ---------- [G2-05] popup da tabela periódica ---------- */
 function togglePeriodicPopup() {
     const popup = document.getElementById('periodic-popup');
     popup.classList.toggle('show');
 }
 
+/* ---------- [G2-06] dificuldade ---------- */
 function selectDifficulty(diff) {
     difficulty = diff;
     errors = 0;
     usedReactions = [];
-    document.getElementById('difficulty-popup').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
-    document.getElementById('game-header').classList.add('show');
-    document.getElementById('game-main').classList.add('show');
     
     const labels = { facil: 'FÁCIL', medio: 'MÉDIO', dificil: 'DIFÍCIL' };
-    document.getElementById('difficulty-label').textContent = labels[diff];
-    
     document.getElementById('periodic-popup').classList.remove('show');
     
-    if (diff === 'facil') {
-        gameDuration = null;
-        document.getElementById('timer').textContent = '∞';
-        document.getElementById('errors-count').textContent = '∞';
-    } else if (diff === 'medio') {
-        gameDuration = 600;
-        document.getElementById('timer').textContent = '10:00';
-        document.getElementById('errors-count').textContent = '0';
-    } else {
-        gameDuration = 300;
-        document.getElementById('timer').textContent = '5:00';
-        document.getElementById('errors-count').textContent = '0';
-    }
-    
-    document.getElementById('game-timer').textContent = '0:00';
+    gameDuration = QuizBase.aplicarDificuldade(diff, labels[diff], '0');
     startTimers();
     nextReaction();
 }
 
+/* ---------- [G2-07] popups e reset ---------- */
 function showDifficultyPopup() {
-    clearInterval(timerInterval);
-    clearInterval(gameTimerInterval);
-    document.getElementById('modal-final').classList.remove('show');
-    document.getElementById('difficulty-popup').classList.add('show');
-    document.getElementById('overlay').classList.add('show');
-    document.getElementById('game-header').classList.remove('show');
-    document.getElementById('game-main').classList.remove('show');
+    QuizBase.abrirPopupDificuldade([timerInterval, gameTimerInterval]);
     resetGame();
 }
 
 function closeDifficultyPopup() {
-    document.getElementById('difficulty-popup').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
+    QuizBase.fecharPopupDificuldade();
 }
 
 function resetGame() {
@@ -165,15 +145,10 @@ function resetGame() {
     correctAnswers = 0;
     errors = 0;
     usedReactions = [];
-    document.getElementById('score').textContent = '0';
-    document.getElementById('correct-count').textContent = '0';
-    document.getElementById('errors-count').textContent = '-';
-    document.getElementById('timer').textContent = '--:--';
-    document.getElementById('game-timer').textContent = '0:00';
-    document.getElementById('difficulty-label').textContent = '-';
-    document.getElementById('message').textContent = '';
+    QuizBase.limparPlacar();
 }
 
+/* ---------- [G2-08] cronômetros ---------- */
 function startTimers() {
     clearInterval(timerInterval);
     clearInterval(gameTimerInterval);
@@ -210,22 +185,12 @@ function startTimers() {
     }
 }
 
+/* ---------- [G2-09] sorteio de composto ---------- */
 function getRandomReaction() {
-    const available = reactions[difficulty];
-    const unused = available.filter((_, index) => !usedReactions.includes(index));
-    
-    if (unused.length === 0) {
-        usedReactions = [];
-        return available[Math.floor(Math.random() * available.length)];
-    }
-    
-    const randomIndex = Math.floor(Math.random() * unused.length);
-    const originalIndex = available.indexOf(unused[randomIndex]);
-    usedReactions.push(originalIndex);
-    
-    return unused[randomIndex];
+    return QuizBase.escolherReacao(reactions[difficulty], usedReactions);
 }
 
+/* ---------- [G2-10] renderização da questão ---------- */
 function renderEquation(reaction) {
     const display = document.getElementById('equation-display');
     display.innerHTML = '';
@@ -253,6 +218,7 @@ function nextReaction() {
     document.getElementById('message').className = 'message';
 }
 
+/* ---------- [G2-11] correção e avanço ---------- */
 function checkAnswer(selected, btn) {
     const buttons = document.querySelectorAll('.bond-btn');
     buttons.forEach(b => b.disabled = true);
@@ -296,6 +262,7 @@ function skipQuestion() {
     nextReaction();
 }
 
+/* ---------- [G2-12] fim de jogo ---------- */
 function endGame() {
     clearInterval(timerInterval);
     clearInterval(gameTimerInterval);

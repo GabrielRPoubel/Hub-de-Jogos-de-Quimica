@@ -1,4 +1,5 @@
 const TabelaPeriodica = (() => {
+    /* ---------- [TP-01] famílias ---------- */
     const FAMILIAS = {
         alkali: ['Metal alcalino', 'Metais alcalinos'],
         alkaline: ['Metal alcalino-terroso', 'Metais alcalino-terrosos'],
@@ -12,6 +13,7 @@ const TabelaPeriodica = (() => {
         actinide: ['Actinídeo', 'Actinídeos']
     };
 
+    /* ---------- [TP-02] classificações ---------- */
     const INICIO_FBLOCO = { lanthanide: 57, actinide: 89 };
 
     const GRUPOS_SIMPLES = {
@@ -34,6 +36,7 @@ const TabelaPeriodica = (() => {
         nobres: ['Gás nobre', 'Gases nobres']
     };
 
+    /* ---------- [TP-03] categorias e escala ---------- */
     const CATEGORIAS = {
         familias: { rotulo: 'Famílias', propriedade: null, unidade: '' },
         eletronegatividade: { rotulo: 'Eletronegatividade', propriedade: 'electronegativity', unidade: '' },
@@ -48,6 +51,7 @@ const TabelaPeriodica = (() => {
         [1, [120, 52, 40]]
     ];
 
+    /* ---------- [TP-04] estado ---------- */
     let classificacaoAtual = 'completa';
     let categoriaAtual = 'familias';
     let ultimoAlvo = null;
@@ -56,6 +60,7 @@ const TabelaPeriodica = (() => {
     let painel = null;
     let tabelaAtual = null;
 
+    /* ---------- [TP-05] utilitários numéricos ---------- */
     function numeroDe(valor) {
         if (valor === null || valor === undefined || valor === '') return null;
         const numero = parseFloat(String(valor).replace(',', '.'));
@@ -91,6 +96,7 @@ const TabelaPeriodica = (() => {
         return `linear-gradient(90deg, ${paradas.join(', ')})`;
     }
 
+    /* ---------- [TP-06] busca e rótulos ---------- */
     function buscarElemento(referencia) {
         if (referencia === null || referencia === undefined) return null;
         const texto = String(referencia).trim().toLowerCase();
@@ -107,6 +113,7 @@ const TabelaPeriodica = (() => {
         return mapa[chaveGrupo(familia)][plural ? 1 : 0];
     }
 
+    /* ---------- [TP-07] montagem da grade ---------- */
     function montar(alvo, opcoes) {
         opcoes = opcoes || {};
         const container = typeof alvo === 'string' ? document.querySelector(alvo) : alvo;
@@ -218,6 +225,7 @@ const TabelaPeriodica = (() => {
         return container;
     }
 
+    /* ---------- [TP-08] placeholders e legendas ---------- */
     function criarPlaceholder(container, linha, faixa, texto, familia) {
         const placeholder = document.createElement('div');
         placeholder.className = 'tp-placeholder tp-familia-' + familia;
@@ -265,6 +273,7 @@ const TabelaPeriodica = (() => {
         }
     }
 
+    /* ---------- [TP-09] escala de cor ---------- */
     function criarEscala(categoria) {
         const limites = limitesDe(categoria.propriedade);
         const escala = document.createElement('div');
@@ -318,6 +327,7 @@ const TabelaPeriodica = (() => {
         return escala;
     }
 
+    /* ---------- [TP-10] destaque ---------- */
     function destacarFamilia(container, familia) {
         if (CATEGORIAS[categoriaAtual].propriedade) return;
         container.dataset.destaque = familia;
@@ -331,6 +341,7 @@ const TabelaPeriodica = (() => {
         container.querySelectorAll('.tp-hl').forEach(celula => celula.classList.remove('tp-hl'));
     }
 
+    /* ---------- [TP-11] painel de detalhes ---------- */
     function garantirPainel() {
         if (painel) return;
 
@@ -457,6 +468,7 @@ const TabelaPeriodica = (() => {
         if (hash) abrir(hash);
     }
 
+    /* ---------- [TP-12] API de visualização ---------- */
     function definirClassificacao(classificacao) {
         if (ultimasOpcoes) {
             ultimasOpcoes.classificacao = classificacao === 'simples' ? 'simples' : 'completa';
@@ -501,6 +513,7 @@ const TabelaPeriodica = (() => {
         return { categoria: categoriaAtual, classificacao: classificacaoAtual };
     }
 
+    /* ---------- [TP-13] API pública ---------- */
     return {
         montar: montar,
         abrir: abrir,
