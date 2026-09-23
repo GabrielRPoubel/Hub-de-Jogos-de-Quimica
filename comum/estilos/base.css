@@ -438,16 +438,48 @@ header h1::after {
 }
 
 .continuar {
-    margin-top: 0.5rem;
-    text-align: center;
+    display: block;
+    margin: 0.75rem auto 0;
+    padding: 0.55rem 1.15rem;
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--raio-pill);
+    background: var(--papel);
+    color: var(--texto-suave);
     font-family: var(--fonte-subtexto);
     font-size: 0.85rem;
-    color: var(--texto-fraco);
+    cursor: pointer;
     animation: pulsar-suave 1.6s ease-in-out infinite;
+    touch-action: manipulation;
+    transition: color var(--transicao), border-color var(--transicao);
 }
 
 .continuar[hidden] {
     display: none;
+}
+
+.continuar-toque {
+    display: none;
+}
+
+@media (hover: hover) {
+    .continuar:hover {
+        color: var(--terracota-escura);
+        border-color: var(--terracota);
+    }
+}
+
+@media (hover: none) {
+    .continuar-tecla {
+        display: none;
+    }
+
+    .continuar-toque {
+        display: inline;
+    }
+}
+
+.trocando {
+    animation: troca-questao 0.35s ease;
 }
 
 /* ---------- overlay e popups ---------- */
@@ -698,6 +730,17 @@ header h1::after {
 @keyframes pulsar-suave {
     50% {
         opacity: 0.45;
+    }
+}
+
+@keyframes troca-questao {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
 

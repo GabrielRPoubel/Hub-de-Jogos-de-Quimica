@@ -52,11 +52,22 @@ const QuizBase = (() => {
         return disponiveis[indiceAleatorio];
     }
 
+    function animarTroca(alvo) {
+        const elemento = typeof alvo === 'string' ? document.querySelector(alvo) : alvo;
+        if (!elemento) {
+            return;
+        }
+        elemento.classList.remove('trocando');
+        void elemento.offsetWidth;
+        elemento.classList.add('trocando');
+    }
+
     return {
         fecharPopupDificuldade,
         abrirPopupDificuldade,
         aplicarDificuldade,
         limparPlacar,
-        escolherReacao
+        escolherReacao,
+        animarTroca
     };
 })();

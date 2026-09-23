@@ -18,7 +18,7 @@ const TOTAL_LINHAS_ESCADA = Math.max(...ORDEM_AUFBAU.map(chave => Number(chave[0
 
 const CAPACIDADE = { s: 2, p: 6, d: 10, f: 14 };
 
-const ROTULOS_DIFICULDADE = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' };
+const ROTULOS_DIFICULDADE = { facil: 'FÁCIL', medio: 'MÉDIO', dificil: 'DIFÍCIL' };
 const MULTIPLICADORES = { facil: 1, medio: 1.5, dificil: 2 };
 const PONTOS_BASE = 100;
 const PENALIDADE_DICA = 25;
@@ -104,6 +104,8 @@ let aguardandoExcecao = false;
 let aguardandoEspaco = false;
 let indiceEscada = 0;
 let dicasUsadas = 0;
+let timerAvanco = null;
+let limpandoLinhas = false;
 
 /* ---------- [G3-03] dificuldade ---------- */
 
@@ -135,6 +137,7 @@ function closeDifficultyPopup() {
 }
 
 function resetGame() {
+    cancelarAvanco();
     score = 0;
     correctAnswers = 0;
     errors = 0;
@@ -219,7 +222,9 @@ function montarSlots() {
 }
 
 function limparLinhas() {
+    limpandoLinhas = true;
     areaConfig.querySelectorAll('.linha-config').forEach(linha => linha.remove());
+    limpandoLinhas = false;
 }
 
 function posicionarLinha(linha, chave) {
@@ -322,7 +327,7 @@ function tentarAvancar(linha) {
 }
 
 function confirmarLinha(linha, focar) {
-    if (linha !== ultimaLinha() || !linhaValida(linha)) {
+    if (limpandoLinhas || linha !== ultimaLinha() || !linhaValida(linha)) {
         return;
     }
     const chave = linha.querySelector('.campo-subnivel').value;
@@ -388,7 +393,23 @@ function showMessage(texto, tipo) {
 function aguardarEspaco() {
     aguardandoEspaco = true;
     gamePaused = true;
-    document.getElementById('continuar').hidden = false;
+    const continuar = document.getElementById('continuar');
+    continuar.hidden = false;
+    continuar.scrollIntoView({ block: 'nearest' });
+}
+
+function agendarAvanco() {
+    clearTimeout(timerAvanco);
+    gamePaused = true;
+    timerAvanco = setTimeout(() => {
+        timerAvanco = null;
+        nextQuestion();
+    }, 1000);
+}
+
+function cancelarAvanco() {
+    clearTimeout(timerAvanco);
+    timerAvanco = null;
 }
 
 function revelarGabarito() {
@@ -440,7 +461,7 @@ function checkAnswer() {
         if (excecaoAtual) {
             mostrarExcecao(acertouAufbau);
         } else {
-            aguardarEspaco();
+            agendarAvanco();
         }
         return;
     }
@@ -506,6 +527,7 @@ function usarDica() {
 /* ---------- [G3-11] avanço de questão ---------- */
 
 function nextQuestion() {
+    cancelarAvanco();
     elementoAtual = sortearElemento();
     esperadoAtual = ordenarAufbau(expandirConfiguracao(elementoAtual));
     previsaoAtual = configuracaoAufbau(elementoAtual.n);
@@ -528,12 +550,14 @@ function nextQuestion() {
     document.getElementById('message').className = 'message';
     document.getElementById('gabarito').textContent = '';
     document.getElementById('continuar').hidden = true;
+    QuizBase.animarTroca('.game-area');
 }
 
 function skipQuestion() {
     if (gamePaused || aguardandoEspaco) {
         return;
     }
+    cancelarAvanco();
     mostrarDistribuicao(esperadoAtual);
     aguardarEspaco();
 }
@@ -541,6 +565,7 @@ function skipQuestion() {
 /* ---------- [G3-12] exceções à regra ---------- */
 
 function mostrarExcecao(usouAufbau) {
+    cancelarAvanco();
     const real = formatarConfiguracao(esperadoAtual);
     const diagrama = formatarConfiguracao(previsaoAtual);
     document.getElementById('excecao-diagrama').textContent = diagrama;
@@ -566,6 +591,7 @@ function fecharExcecao() {
 
 function endGame() {
     clearInterval(timerInterval);
+    cancelarAvanco();
     gamePaused = true;
     aguardandoExcecao = false;
     aguardandoEspaco = false;
@@ -709,6 +735,12 @@ document.addEventListener('keydown', evento => {
             return;
         }
         checkAnswer();
+    }
+});
+
+document.getElementById('continuar').addEventListener('click', () => {
+    if (aguardandoEspaco) {
+        nextQuestion();
     }
 });
 

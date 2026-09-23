@@ -42,9 +42,10 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - Breakpoints mobile: `720px` (tabela periódica, com `min-width: 680px` + scroll horizontal),
   `640px` (base, home e jogos) e `400px` (stats em 2 colunas). Hovers ficam dentro de
   `@media (hover: hover)`; alvos de toque com `touch-action: manipulation`.
-- Fim de questão: os três jogos pausam o cronômetro e mostram `.continuar`
-  ("Pressione espaço para continuar", em `base.css`); o avanço é com Espaço (padrão do jogo3).
-  Nada de `setTimeout(nextReaction)` nem "(ESPAÇO para continuar)" colado na mensagem.
+- Fim de questão: **acerto** avança sozinho após ~1s (`agendarAvanco()` +
+  `QuizBase.animarTroca('.game-area')`); **erro/pular** pausa com o botão `.continuar`
+  ("Pressione espaço..." no desktop, "Toque para continuar" em telas de toque, em `base.css`).
+  Nada de `setTimeout(nextReaction)` direto nem "(ESPAÇO para continuar)" colado na mensagem.
 - Dados da tabela: `null` = não medido/inexistente; `previsto: true` para Z ≥ 100; fonte
   base PubChem (massa, fusão/ebulição em °C, densidade) + Wikipedia (raio,
   eletronegatividade, ionização). Não "corrija" valores sem conferir a fonte.

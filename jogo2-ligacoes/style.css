@@ -139,7 +139,8 @@ main.show {
     animation: popup-in 0.28s ease;
 }
 
-.periodic-popup.blurred .periodic-popup-content {
+.periodic-popup.blurred #periodic-legend,
+.periodic-popup.blurred #periodic-table {
     filter: blur(9px);
     pointer-events: none;
     user-select: none;

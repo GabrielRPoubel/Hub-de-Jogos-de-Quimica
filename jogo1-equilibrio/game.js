@@ -297,6 +297,7 @@ let gameDuration = null;
 let hintedIndex = null;
 let gamePaused = false;
 let aguardandoEspaco = false;
+let timerAvanco = null;
 let pausedTime = 0;
 let usedReactions = [];
 
@@ -305,7 +306,7 @@ function selectDifficulty(diff) {
     difficulty = diff;
     errors = 0;
     
-    const labels = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' };
+    const labels = { facil: 'FÁCIL', medio: 'MÉDIO', dificil: 'DIFÍCIL' };
     const machoPanel = document.getElementById('macho-panel');
     machoPanel.classList.remove('blurred');
     machoPanel.classList.remove('show');
@@ -328,6 +329,7 @@ function closeDifficultyPopup() {
 
 /* ---------- [G1-05] reset ---------- */
 function resetGame() {
+    cancelarAvanco();
     score = 0;
     correctAnswers = 0;
     errors = 0;
@@ -462,7 +464,7 @@ function checkAnswer() {
         inputs.forEach(input => input.classList.add('correct'));
         showMessage(`Correto! +${points} pontos`, 'success');
         
-        aguardarEspaco();
+        agendarAvanco();
     } else {
         errors++;
         inputs.forEach(input => input.classList.add('incorrect'));
@@ -508,7 +510,23 @@ function showMessage(text, type) {
 function aguardarEspaco() {
     aguardandoEspaco = true;
     gamePaused = true;
-    document.getElementById('continuar').hidden = false;
+    const continuar = document.getElementById('continuar');
+    continuar.hidden = false;
+    continuar.scrollIntoView({ block: 'nearest' });
+}
+
+function agendarAvanco() {
+    clearTimeout(timerAvanco);
+    gamePaused = true;
+    timerAvanco = setTimeout(() => {
+        timerAvanco = null;
+        nextReaction();
+    }, 1000);
+}
+
+function cancelarAvanco() {
+    clearTimeout(timerAvanco);
+    timerAvanco = null;
 }
 
 function showHint() {
@@ -566,12 +584,14 @@ function showHint() {
 
 /* ---------- [G1-11] avanço de questão ---------- */
 function skipQuestion() {
+    cancelarAvanco();
     const correctStr = currentReaction.balanced.join(', ');
     showMessage(`Reação pulada. Respostas: ${correctStr}`, 'error');
     aguardarEspaco();
 }
 
 function nextReaction() {
+    cancelarAvanco();
     currentReaction = getRandomReaction();
     questionStartTime = Date.now();
     hintsUsed = 0;
@@ -586,11 +606,13 @@ function nextReaction() {
     renderCoefficientInputs(currentReaction);
     document.getElementById('message').textContent = '';
     document.getElementById('hints-area').innerHTML = '';
+    QuizBase.animarTroca('.game-area');
 }
 
 /* ---------- [G1-12] fim de jogo ---------- */
 function endGame() {
     clearInterval(timerInterval);
+    cancelarAvanco();
     const totalTime = Math.floor((Date.now() - gameStartTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
     const seconds = totalTime % 60;
@@ -647,6 +669,12 @@ function toggleMachoPanel() {
 
 /* ---------- [G1-14] inicialização ---------- */
 document.addEventListener('keydown', handleKeyPress);
+
+document.getElementById('continuar').addEventListener('click', () => {
+    if (aguardandoEspaco) {
+        nextReaction();
+    }
+});
 
 document.getElementById('overlay').addEventListener('click', closeDifficultyPopup);
 

@@ -94,6 +94,7 @@ let totalElapsed = 0;
 let maxErrors = 3;
 let gamePaused = false;
 let aguardandoEspaco = false;
+let timerAvanco = null;
 let pausedTime = 0;
 let usedReactions = [];
 
@@ -144,6 +145,7 @@ function closeDifficultyPopup() {
 }
 
 function resetGame() {
+    cancelarAvanco();
     score = 0;
     correctAnswers = 0;
     errors = 0;
@@ -215,6 +217,7 @@ function renderBondOptions() {
 }
 
 function nextReaction() {
+    cancelarAvanco();
     currentReaction = getRandomReaction();
     gamePaused = false;
     aguardandoEspaco = false;
@@ -223,12 +226,29 @@ function nextReaction() {
     renderBondOptions();
     document.getElementById('message').textContent = '';
     document.getElementById('message').className = 'message';
+    QuizBase.animarTroca('.game-area');
 }
 
 function aguardarEspaco() {
     aguardandoEspaco = true;
     gamePaused = true;
-    document.getElementById('continuar').hidden = false;
+    const continuar = document.getElementById('continuar');
+    continuar.hidden = false;
+    continuar.scrollIntoView({ block: 'nearest' });
+}
+
+function agendarAvanco() {
+    clearTimeout(timerAvanco);
+    gamePaused = true;
+    timerAvanco = setTimeout(() => {
+        timerAvanco = null;
+        nextReaction();
+    }, 1200);
+}
+
+function cancelarAvanco() {
+    clearTimeout(timerAvanco);
+    timerAvanco = null;
 }
 
 document.addEventListener('keydown', evento => {
@@ -238,28 +258,39 @@ document.addEventListener('keydown', evento => {
     }
 });
 
+document.getElementById('continuar').addEventListener('click', () => {
+    if (aguardandoEspaco) {
+        nextReaction();
+    }
+});
+
 /* ---------- [G2-11] correção e avanço ---------- */
 function checkAnswer(selected, btn) {
     const buttons = document.querySelectorAll('.bond-btn');
     buttons.forEach(b => b.disabled = true);
-    
-    if (selected === currentReaction.bond) {
+
+    const acertou = selected === currentReaction.bond;
+
+    if (acertou) {
         btn.classList.add('correct');
         score += 100;
         correctAnswers++;
         document.getElementById('score').textContent = score;
         document.getElementById('correct-count').textContent = correctAnswers;
-        document.getElementById('message').textContent = currentReaction.explanation;
-        document.getElementById('message').className = 'message success';
     } else {
         btn.classList.add('incorrect');
         errors++;
         document.getElementById('errors-count').textContent = errors;
-        document.getElementById('message').textContent = currentReaction.explanation;
-        document.getElementById('message').className = 'message error';
     }
-    
-    aguardarEspaco();
+
+    document.getElementById('message').textContent = currentReaction.explanation;
+    document.getElementById('message').className = 'message ' + (acertou ? 'success' : 'error');
+
+    if (acertou) {
+        agendarAvanco();
+    } else {
+        aguardarEspaco();
+    }
 }
 
 function skipQuestion() {
@@ -270,7 +301,8 @@ function skipQuestion() {
 function endGame() {
     clearInterval(timerInterval);
     clearInterval(gameTimerInterval);
-    
+    cancelarAvanco();
+
     document.getElementById('final-score').textContent = score;
     document.getElementById('final-total-correct').textContent = correctAnswers;
     

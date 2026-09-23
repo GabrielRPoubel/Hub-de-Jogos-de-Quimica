@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../comum/estilos/base.css?v=7">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="../comum/estilos/base.css?v=8">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
     <a href="../index.html#jogos" class="back-link">← Voltar ao Hub</a>
@@ -40,27 +40,27 @@
         <h1>Equilíbrio de Reações</h1>
         <div class="stats">
             <div class="stat">
-                <span class="stat-label">Pontuação</span>
+                <span class="stat-label">PONTUAÇÃO</span>
                 <span class="stat-value" id="score">0</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Questão</span>
+                <span class="stat-label">VOCÊ TEM</span>
                 <span class="stat-value" id="timer">--:--</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Tempo Total</span>
+                <span class="stat-label">TEMPO DE JOGO</span>
                 <span class="stat-value" id="game-timer">0:00</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Acertos</span>
+                <span class="stat-label">ACERTOS</span>
                 <span class="stat-value" id="correct-count">0</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Erros</span>
+                <span class="stat-label">ERROS RESTANTES</span>
                 <span class="stat-value" id="errors-count">-</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Dificuldade</span>
+                <span class="stat-label">DIFICULDADE</span>
                 <span class="stat-value" id="difficulty-label">-</span>
             </div>
         </div>
@@ -89,7 +89,10 @@
 
                 <div class="hints-area" id="hints-area"></div>
 
-                <p class="continuar" id="continuar" hidden>Pressione espaço para continuar</p>
+                <button type="button" class="continuar" id="continuar" hidden>
+                    <span class="continuar-tecla">Pressione espaço para continuar</span>
+                    <span class="continuar-toque">Toque para continuar</span>
+                </button>
             </div>
 
             <div class="macho-panel" id="macho-panel">
@@ -151,8 +154,8 @@
         </div>
     </div>
 
-    <script src="../comum/icones/icones.js?v=7"></script>
-    <script src="../comum/jogos/quiz-base.js?v=7"></script>
-    <script src="game.js?v=7"></script>
+    <script src="../comum/icones/icones.js?v=8"></script>
+    <script src="../comum/jogos/quiz-base.js?v=8"></script>
+    <script src="game.js?v=8"></script>
 </body>
 </html>
