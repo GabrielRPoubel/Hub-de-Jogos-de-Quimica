@@ -84,14 +84,12 @@ const bondTypes = ["IÔNICA", "COVALENTE", "MISTA", "PONTE DE HIDROGÊNIO"];
 let difficulty = null;
 let score = 0;
 let correctAnswers = 0;
-let errors = 0;
 let currentReaction = null;
 let gameDuration = null;
 let timerInterval = null;
 let gameTimerInterval = null;
 let elapsed = 0;
 let totalElapsed = 0;
-let maxErrors = 3;
 let gamePaused = false;
 let aguardandoEspaco = false;
 let timerAvanco = null;
@@ -122,7 +120,6 @@ function togglePeriodicPopup() {
 /* ---------- [G2-06] dificuldade ---------- */
 function selectDifficulty(diff) {
     difficulty = diff;
-    errors = 0;
     usedReactions = [];
     
     const labels = { facil: 'FÁCIL', medio: 'MÉDIO', dificil: 'DIFÍCIL' };
@@ -148,7 +145,6 @@ function resetGame() {
     cancelarAvanco();
     score = 0;
     correctAnswers = 0;
-    errors = 0;
     usedReactions = [];
     aguardandoEspaco = false;
     QuizBase.limparPlacar();
@@ -279,8 +275,6 @@ function checkAnswer(selected, btn) {
         document.getElementById('correct-count').textContent = correctAnswers;
     } else {
         btn.classList.add('incorrect');
-        errors++;
-        document.getElementById('errors-count').textContent = errors;
     }
 
     document.getElementById('message').textContent = currentReaction.explanation;

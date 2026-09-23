@@ -24,15 +24,21 @@ const QuizBase = (() => {
         document.getElementById('difficulty-label').textContent = rotulo;
         document.getElementById('game-timer').textContent = '0:00';
         document.getElementById('timer').textContent = TEMPOS[diff];
-        document.getElementById('errors-count').textContent =
-            diff === 'facil' ? '∞' : (diff === 'medio' ? erroInicial : '0');
+        const erros = document.getElementById('errors-count');
+        if (erros) {
+            erros.textContent =
+                diff === 'facil' ? '∞' : (diff === 'medio' ? erroInicial : '0');
+        }
         return DURACOES[diff];
     }
 
     function limparPlacar() {
         document.getElementById('score').textContent = '0';
         document.getElementById('correct-count').textContent = '0';
-        document.getElementById('errors-count').textContent = '-';
+        const erros = document.getElementById('errors-count');
+        if (erros) {
+            erros.textContent = '-';
+        }
         document.getElementById('timer').textContent = '--:--';
         document.getElementById('game-timer').textContent = '0:00';
         document.getElementById('difficulty-label').textContent = '-';
