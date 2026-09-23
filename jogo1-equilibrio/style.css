@@ -108,8 +108,10 @@ main.show {
     background: rgba(244, 236, 221, 0.6);
 }
 
-.macho-table tr:hover {
-    background: var(--areia);
+@media (hover: hover) {
+    .macho-table tr:hover {
+        background: var(--areia);
+    }
 }
 
 .macho-panel.blurred {

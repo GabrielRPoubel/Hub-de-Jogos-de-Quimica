@@ -113,7 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ---------- [G2-05] popup da tabela periódica ---------- */
 function togglePeriodicPopup() {
     const popup = document.getElementById('periodic-popup');
+    const botao = document.getElementById('info-btn');
     popup.classList.toggle('show');
+    botao.setAttribute('aria-expanded', String(popup.classList.contains('show')));
 }
 
 /* ---------- [G2-06] dificuldade ---------- */

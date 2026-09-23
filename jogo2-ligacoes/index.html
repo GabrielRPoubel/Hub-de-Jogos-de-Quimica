@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../comum/estilos/base.css?v=4">
-    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=4">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="../comum/estilos/base.css?v=5">
+    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=5">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
     <a href="../index.html#jogos" class="back-link">← VOLTAR AO HUB</a>
@@ -23,7 +23,7 @@
         <div class="periodic-popup-content">
             <div class="periodic-popup-header">
                 <h3>Tabela Periódica</h3>
-                <button class="btn-close-panel" onclick="togglePeriodicPopup()">✕</button>
+                <button class="btn-close-panel" aria-label="Fechar tabela periódica" onclick="togglePeriodicPopup()">✕</button>
             </div>
             <div id="periodic-legend"></div>
             <div id="periodic-table"></div>
@@ -81,7 +81,7 @@
     <main id="game-main">
         <div class="game-container">
             <div class="game-area">
-                <button class="info-btn" id="info-btn" onclick="togglePeriodicPopup()"><span class="icone" data-icone="info"></span></button>
+                <button class="info-btn" id="info-btn" aria-expanded="false" aria-controls="periodic-popup" onclick="togglePeriodicPopup()"><span class="icone" data-icone="info"></span></button>
 
                 <div class="equation-display" id="equation-display"></div>
 
@@ -109,10 +109,10 @@
         </div>
     </div>
 
-    <script src="../comum/icones/icones.js?v=4"></script>
-    <script src="../comum/tabela-periodica/elements.js?v=4"></script>
-    <script src="../comum/tabela-periodica/tabela-periodica.js?v=4"></script>
-    <script src="../comum/jogos/quiz-base.js?v=4"></script>
-    <script src="game.js?v=4"></script>
+    <script src="../comum/icones/icones.js?v=5"></script>
+    <script src="../comum/tabela-periodica/elements.js?v=5"></script>
+    <script src="../comum/tabela-periodica/tabela-periodica.js?v=5"></script>
+    <script src="../comum/jogos/quiz-base.js?v=5"></script>
+    <script src="game.js?v=5"></script>
 </body>
 </html>

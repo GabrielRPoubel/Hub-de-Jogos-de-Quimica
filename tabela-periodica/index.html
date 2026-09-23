@@ -7,9 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../comum/estilos/base.css?v=4">
-    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=4">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="../comum/estilos/base.css?v=5">
+    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=5">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
     <a href="../index.html#jogos" class="back-link">← VOLTAR AO HUB</a>
@@ -39,9 +39,9 @@
         </div>
     </main>
 
-    <script src="../comum/icones/icones.js?v=4"></script>
-    <script src="../comum/tabela-periodica/elements.js?v=4"></script>
-    <script src="../comum/tabela-periodica/tabela-periodica.js?v=4"></script>
+    <script src="../comum/icones/icones.js?v=5"></script>
+    <script src="../comum/tabela-periodica/elements.js?v=5"></script>
+    <script src="../comum/tabela-periodica/tabela-periodica.js?v=5"></script>
     <script>
         TabelaPeriodica.montar('#periodic-table', {
             modo: 'completa',
@@ -63,12 +63,21 @@
 
         function atualizarBotoes() {
             Object.keys(BOTOES_CATEGORIA).forEach(chave => {
-                document.getElementById(BOTOES_CATEGORIA[chave]).classList.toggle('ativo', chave === categoriaAtualPagina);
+                const botao = document.getElementById(BOTOES_CATEGORIA[chave]);
+                const ativo = chave === categoriaAtualPagina;
+                botao.classList.toggle('ativo', ativo);
+                botao.setAttribute('aria-pressed', String(ativo));
             });
             document.getElementById('sub-familias').hidden = categoriaAtualPagina !== 'familias';
-            document.getElementById('modo-simples').classList.toggle('ativo', classificacaoAtualPagina === 'simples');
-            document.getElementById('modo-completa').classList.toggle('ativo', classificacaoAtualPagina === 'completa');
+            const simples = document.getElementById('modo-simples');
+            const completa = document.getElementById('modo-completa');
+            simples.classList.toggle('ativo', classificacaoAtualPagina === 'simples');
+            simples.setAttribute('aria-pressed', String(classificacaoAtualPagina === 'simples'));
+            completa.classList.toggle('ativo', classificacaoAtualPagina === 'completa');
+            completa.setAttribute('aria-pressed', String(classificacaoAtualPagina === 'completa'));
         }
+
+        atualizarBotoes();
 
         function definirModo(classificacao) {
             classificacaoAtualPagina = TabelaPeriodica.definirClassificacao(classificacao);

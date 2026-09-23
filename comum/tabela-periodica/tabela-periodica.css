@@ -150,16 +150,18 @@
     color: var(--texto-fraco);
 }
 
-.tp-table.tp-calor .tp-element:hover {
-    background: rgba(var(--c), 0.92);
-}
+@media (hover: hover) {
+    .tp-table.tp-calor .tp-element:hover {
+        background: rgba(var(--c), 0.92);
+    }
 
-.tp-element:hover {
-    transform: translateY(-4px) scale(1.06);
-    border-color: rgba(var(--c), 0.9);
-    background: rgba(var(--c), 0.16);
-    box-shadow: 0 0 0 3px rgba(var(--c), 0.16), 0 10px 22px rgba(96, 74, 50, 0.18);
-    z-index: 5;
+    .tp-element:hover {
+        transform: translateY(-4px) scale(1.06);
+        border-color: rgba(var(--c), 0.9);
+        background: rgba(var(--c), 0.16);
+        box-shadow: 0 0 0 3px rgba(var(--c), 0.16), 0 10px 22px rgba(96, 74, 50, 0.18);
+        z-index: 5;
+    }
 }
 
 .tp-element.tp-selecionado {
@@ -235,10 +237,12 @@
     opacity: 0.85;
 }
 
-.tp-placeholder:hover {
-    background: rgba(var(--c), 0.16);
-    border-style: solid;
-    box-shadow: 0 0 0 3px rgba(var(--c), 0.14);
+@media (hover: hover) {
+    .tp-placeholder:hover {
+        background: rgba(var(--c), 0.16);
+        border-style: solid;
+        box-shadow: 0 0 0 3px rgba(var(--c), 0.14);
+    }
 }
 
 /* ---------- legenda ---------- */
@@ -265,15 +269,18 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    cursor: default;
+    cursor: pointer;
+    touch-action: manipulation;
     transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 
-.tp-legenda-chip:hover {
-    background: rgba(var(--c), 0.18);
-    color: var(--texto);
-    box-shadow: 0 6px 16px rgba(96, 74, 50, 0.14);
-    transform: translateY(-2px);
+@media (hover: hover) {
+    .tp-legenda-chip:hover {
+        background: rgba(var(--c), 0.18);
+        color: var(--texto);
+        box-shadow: 0 6px 16px rgba(96, 74, 50, 0.14);
+        transform: translateY(-2px);
+    }
 }
 
 .tp-legenda-ponto {
@@ -619,13 +626,49 @@
 }
 
 @media (max-width: 720px) {
+    .tp-scroll {
+        overscroll-behavior-x: contain;
+        background:
+            linear-gradient(to right, var(--marfim) 30%, rgba(250, 246, 238, 0)) left center / 40px 100% no-repeat local,
+            radial-gradient(farthest-side at 0% 50%, rgba(96, 74, 50, 0.22), rgba(96, 74, 50, 0)) left center / 16px 100% no-repeat scroll,
+            linear-gradient(to left, var(--marfim) 30%, rgba(250, 246, 238, 0)) right center / 40px 100% no-repeat local,
+            radial-gradient(farthest-side at 100% 50%, rgba(96, 74, 50, 0.22), rgba(96, 74, 50, 0)) right center / 16px 100% no-repeat scroll;
+    }
+
+    .tp-table:not(.tp-compacta) {
+        min-width: 680px;
+    }
+
     .tp-element .tp-nome {
         display: none;
+    }
+
+    .tp-element,
+    .tp-placeholder,
+    .tp-legenda-chip {
+        touch-action: manipulation;
+    }
+
+    .tp-legenda-espaco .tp-legenda-chip {
+        font-size: 0.58rem;
+        gap: 0.3rem;
+    }
+
+    .tp-legenda-espaco .tp-legenda-ponto {
+        width: 9px;
+        height: 9px;
     }
 
     .tp-painel {
         width: 100%;
         max-width: 100%;
+        height: 100dvh;
+        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    }
+
+    .tp-fechar {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.4rem;
     }
 }
 

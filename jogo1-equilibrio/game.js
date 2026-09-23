@@ -624,7 +624,9 @@ function handleKeyPress(event) {
 
 function toggleMachoPanel() {
     const panel = document.getElementById('macho-panel');
+    const botao = document.getElementById('info-btn');
     panel.classList.toggle('show');
+    botao.setAttribute('aria-expanded', String(panel.classList.contains('show')));
 }
 
 /* ---------- [G1-14] inicialização ---------- */

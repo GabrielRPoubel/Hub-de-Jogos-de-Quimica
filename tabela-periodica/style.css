@@ -76,10 +76,12 @@ main {
         border-color var(--transicao), box-shadow var(--transicao), transform var(--transicao);
 }
 
-.modo-botao:hover {
-    border-color: var(--borda-forte);
-    color: var(--texto);
-    transform: translateY(-2px);
+@media (hover: hover) {
+    .modo-botao:hover {
+        border-color: var(--borda-forte);
+        color: var(--texto);
+        transform: translateY(-2px);
+    }
 }
 
 .modo-botao.ativo {
@@ -116,10 +118,12 @@ main {
     font-size: 0.95rem;
 }
 
-.modo-botao--original:hover {
-    color: var(--terracota);
-    border-color: rgba(192, 102, 74, 0.45);
-    background: rgba(192, 102, 74, 0.06);
+@media (hover: hover) {
+    .modo-botao--original:hover {
+        color: var(--terracota);
+        border-color: rgba(192, 102, 74, 0.45);
+        background: rgba(192, 102, 74, 0.06);
+    }
 }
 
 .area-tabela {
@@ -134,4 +138,50 @@ main {
 .area-tabela > .tp-scroll {
     width: 100%;
     padding: 0;
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 720px) {
+    body {
+        padding: 0.5rem 0.6rem 0.6rem;
+    }
+
+    .back-link {
+        margin-bottom: 0.25rem;
+    }
+
+    .barra-tabela {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        gap: 0.3rem 0.6rem;
+        padding: 0.15rem 0.1rem 0.4rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .barra-tabela::-webkit-scrollbar {
+        display: none;
+    }
+
+    .modo-tabela {
+        flex: none;
+    }
+
+    .modo-botao {
+        flex: none;
+        padding: 0.55rem 0.95rem;
+        font-size: 0.68rem;
+        touch-action: manipulation;
+    }
+
+    .modo-tabela--sub .modo-botao {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.62rem;
+    }
+
+    .modo-botao--original {
+        padding: 0.55rem 0.9rem;
+    }
 }

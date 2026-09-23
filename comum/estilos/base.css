@@ -363,7 +363,7 @@ header h1::after {
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--texto-fraco);
+    color: var(--texto-suave);
     margin-bottom: 0.2rem;
 }
 

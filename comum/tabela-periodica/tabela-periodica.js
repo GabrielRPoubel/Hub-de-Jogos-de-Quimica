@@ -234,8 +234,7 @@ const TabelaPeriodica = (() => {
         placeholder.innerHTML =
             `<span class="tp-faixa">${faixa}</span>` +
             `<span class="tp-placeholder-texto">${texto}</span>`;
-        placeholder.addEventListener('mouseenter', () => destacarFamilia(container, familia));
-        placeholder.addEventListener('mouseleave', () => limparDestaque(container));
+        ligarDestaque(placeholder, container, familia);
         container.appendChild(placeholder);
     }
 
@@ -262,8 +261,7 @@ const TabelaPeriodica = (() => {
                 chip.innerHTML =
                     `<span class="tp-legenda-ponto"></span>` +
                     `<span>${mapa[grupo][1]}</span>`;
-                chip.addEventListener('mouseenter', () => destacarFamilia(container, grupo));
-                chip.addEventListener('mouseleave', () => limparDestaque(container));
+                ligarDestaque(chip, container, grupo);
                 legenda.appendChild(chip);
             });
         }
@@ -328,6 +326,22 @@ const TabelaPeriodica = (() => {
     }
 
     /* ---------- [TP-10] destaque ---------- */
+    function ligarDestaque(elemento, container, familia) {
+        elemento.addEventListener('pointerenter', evento => {
+            if (evento.pointerType === 'mouse') destacarFamilia(container, familia);
+        });
+        elemento.addEventListener('pointerleave', evento => {
+            if (evento.pointerType === 'mouse') limparDestaque(container);
+        });
+        elemento.addEventListener('click', () => {
+            if (container.dataset.destaque === familia) {
+                limparDestaque(container);
+            } else {
+                destacarFamilia(container, familia);
+            }
+        });
+    }
+
     function destacarFamilia(container, familia) {
         if (CATEGORIAS[categoriaAtual].propriedade) return;
         container.dataset.destaque = familia;
@@ -352,7 +366,7 @@ const TabelaPeriodica = (() => {
         painel = document.createElement('aside');
         painel.className = 'tp-painel';
         painel.innerHTML =
-            '<button class="tp-fechar" type="button">✕</button>' +
+            '<button class="tp-fechar" type="button" aria-label="Fechar detalhes">✕</button>' +
             '<div class="tp-painel-conteudo"></div>';
         painel.querySelector('.tp-fechar').addEventListener('click', fechar);
 
