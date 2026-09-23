@@ -201,7 +201,9 @@ function renderElemento() {
 
 function atualizarProgresso() {
     const total = coletarLinhas().reduce((soma, item) => soma + item.potencia, 0);
-    document.getElementById('progresso').textContent = `${total}/${elementoAtual.n} e⁻`;
+    document.getElementById('progresso').textContent = difficulty === 'dificil'
+        ? `${total} e⁻`
+        : `${total}/${elementoAtual.n} e⁻`;
 }
 
 /* ---------- [G3-08] escada de preenchimento ---------- */
