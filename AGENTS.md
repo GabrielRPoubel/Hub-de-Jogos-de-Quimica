@@ -37,6 +37,9 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - Prefixos: tabela = `tp-`, home = `hero-`/`carrossel-`/`becker`, ids de jogo = `game-*`.
 - Toda referência local de CSS/JS nos HTMLs leva `?v=N` (cache busting). Nunca edite à mão:
   use `ferramentas/versao.py`.
+- Breakpoints mobile: `720px` (tabela periódica, com `min-width: 680px` + scroll horizontal),
+  `640px` (base, home e jogos) e `400px` (stats em 2 colunas). Hovers ficam dentro de
+  `@media (hover: hover)`; alvos de toque com `touch-action: manipulation`.
 - Dados da tabela: `null` = não medido/inexistente; `previsto: true` para Z ≥ 100; fonte
   base PubChem (massa, fusão/ebulição em °C, densidade) + Wikipedia (raio,
   eletronegatividade, ionização). Não "corrija" valores sem conferir a fonte.
