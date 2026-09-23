@@ -1,5 +1,6 @@
 .palco {
     min-height: calc(100vh - 2rem);
+    min-height: calc(100dvh - 2rem);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -265,6 +266,7 @@ main {
     text-decoration: none;
     color: var(--texto);
     cursor: pointer;
+    touch-action: manipulation;
     transition: transform var(--transicao), box-shadow var(--transicao), border-color var(--transicao);
 }
 
@@ -309,6 +311,7 @@ main {
     background: rgba(255, 253, 248, 0.95);
     color: var(--terracota);
     cursor: pointer;
+    touch-action: manipulation;
     box-shadow: var(--sombra);
     transition: transform var(--transicao), background var(--transicao), opacity var(--transicao);
 }
@@ -343,17 +346,29 @@ main {
 }
 
 .indicador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.indicador::before {
+    content: '';
     width: 9px;
     height: 9px;
-    padding: 0;
     border-radius: 50%;
     border: 1px solid var(--borda-forte);
     background: transparent;
-    cursor: pointer;
     transition: background var(--transicao), border-color var(--transicao), transform var(--transicao);
 }
 
-.indicador.ativo {
+.indicador.ativo::before {
     background: var(--terracota);
     border-color: var(--terracota);
     transform: scale(1.25);
@@ -378,5 +393,43 @@ main {
 
     .carrossel-seta--dir {
         right: 2px;
+    }
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 640px) {
+    .palco {
+        gap: 1.4rem;
+    }
+
+    .hero {
+        padding: 0.8rem 0.75rem 0.25rem;
+    }
+
+    .acoes {
+        align-self: stretch;
+    }
+
+    .botao-jogar {
+        width: 100%;
+        max-width: 320px;
+        padding: 1rem 1.5rem;
+    }
+
+    .carrossel-seta {
+        display: none;
+    }
+
+    .jogo-card {
+        flex-basis: 88%;
+    }
+}
+
+@media (hover: none) {
+    .jogo-card:hover {
+        transform: none;
+        border-color: var(--borda);
+        box-shadow: var(--sombra-suave);
     }
 }

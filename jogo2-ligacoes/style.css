@@ -41,7 +41,9 @@ main.show {
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-content: safe center;
     min-height: 92px;
+    overflow-x: auto;
     padding: 1.5rem;
     margin-bottom: 2rem;
     text-align: center;
@@ -75,6 +77,7 @@ main.show {
     letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
+    touch-action: manipulation;
     box-shadow: var(--sombra-suave);
     transition: transform var(--transicao), border-color var(--transicao),
         background var(--transicao), color var(--transicao), box-shadow var(--transicao);
@@ -166,10 +169,10 @@ main.show {
 
 /* ---------- responsivo ---------- */
 
-@media (max-width: 600px) {
-    .stats {
-        flex-direction: column;
-        align-items: stretch;
+@media (max-width: 640px) {
+    .equation-display {
+        padding: 1rem 0.75rem;
+        margin-bottom: 1.25rem;
     }
 
     .equation-display .katex {
@@ -177,11 +180,64 @@ main.show {
     }
 
     .bond-options {
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.6rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .bond-btn {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+        text-align: center;
     }
 
     .controls {
         flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    .periodic-popup {
+        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        transform: none;
+        border: 0;
+        border-radius: 0;
+        padding: 1rem;
+    }
+
+    .periodic-popup.show {
+        animation: fade-in 0.25s ease;
+    }
+
+    .periodic-popup-content {
+        width: 100%;
+    }
+
+    .periodic-popup-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--papel);
+        padding-bottom: 0.4rem;
+    }
+
+    .periodic-popup .btn-close-panel {
+        padding: 0.5rem 0.7rem;
+        font-size: 1.35rem;
+    }
+}
+
+@media (hover: none) {
+    .bond-btn:hover {
+        transform: none;
+        border-color: var(--borda-forte);
+        color: var(--texto);
+        box-shadow: var(--sombra-suave);
     }
 }

@@ -64,6 +64,9 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - Screenshot: `powershell -ExecutionPolicy Bypass -File ferramentas/screenshot.ps1 -Url <url>
   -Saida <png>` (Edge headless; já embute retry; o Bypass é necessário pois .ps1 é bloqueado
   pela política de execução do Windows).
+- Screenshot mobile: mesmo comando apontando para `ferramentas/mobile.html#../caminho/index.html`
+  com `-Largura 520 -Altura 780` (o Edge headless ignora janelas menores que ~496px; o wrapper
+  renderiza a página num iframe de 390px — use `#`, nunca `?url=`, que o PowerShell mangleia).
 - Corrigir/adicionar dado de elemento: grep o símbolo em `elements.js` e edite a linha única.
 - Nova categoria de mapa de calor: adicione em `CATEGORIAS` ([TP-03] em
   `tabela-periodica.js`) com `propriedade` e `unidade`; a escala de cor é automática.

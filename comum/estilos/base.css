@@ -50,6 +50,7 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -61,6 +62,7 @@ body {
         var(--marfim);
     background-attachment: fixed;
     min-height: 100vh;
+    min-height: 100dvh;
     padding: 1rem;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -195,6 +197,7 @@ header h1::after {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     cursor: pointer;
+    touch-action: manipulation;
     transition: transform var(--transicao), box-shadow var(--transicao),
         background var(--transicao), border-color var(--transicao), color var(--transicao);
 }
@@ -398,6 +401,7 @@ header h1::after {
     background: var(--papel);
     color: var(--terracota);
     cursor: pointer;
+    touch-action: manipulation;
     box-shadow: var(--sombra-suave);
     transition: transform var(--transicao), background var(--transicao), border-color var(--transicao);
 }
@@ -553,6 +557,79 @@ header h1::after {
     font-family: var(--fonte-titulo);
     font-weight: 700;
     color: var(--terracota-escura);
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 640px) {
+    .game-area {
+        padding: 1.25rem 1rem;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .stat {
+        min-width: 0;
+        padding: 0.55rem 0.6rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.07em;
+    }
+
+    .stat-value {
+        font-size: 1.15rem;
+    }
+
+    .difficulty-popup {
+        width: min(92vw, 420px);
+        min-width: 0;
+        max-height: calc(100dvh - 2rem);
+        overflow-y: auto;
+        padding: 1.5rem 1.25rem;
+    }
+
+    .modal-content {
+        max-height: calc(100dvh - 2rem);
+        overflow-y: auto;
+        padding: 1.6rem 1.25rem;
+    }
+
+    .btn-difficulty {
+        padding: 0.85rem 1.25rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (hover: none) {
+    .btn-difficulty:hover,
+    .btn-difficulty.easy:hover,
+    .btn-difficulty.medium:hover,
+    .btn-difficulty.hard:hover {
+        transform: none;
+        box-shadow: none;
+        background: var(--papel);
+    }
+
+    .info-btn:hover {
+        transform: none;
+        background: var(--papel);
+    }
+
+    .btn-back:hover {
+        border-color: var(--borda);
+        color: var(--texto-suave);
+    }
 }
 
 /* ---------- animações ---------- */
