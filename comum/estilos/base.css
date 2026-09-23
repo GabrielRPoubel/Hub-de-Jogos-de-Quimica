@@ -437,6 +437,19 @@ header h1::after {
     color: var(--ambar-escura);
 }
 
+.continuar {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-family: var(--fonte-subtexto);
+    font-size: 0.85rem;
+    color: var(--texto-fraco);
+    animation: pulsar-suave 1.6s ease-in-out infinite;
+}
+
+.continuar[hidden] {
+    display: none;
+}
+
 /* ---------- overlay e popups ---------- */
 
 .overlay {
@@ -562,6 +575,10 @@ header h1::after {
 /* ---------- responsivo ---------- */
 
 @media (max-width: 640px) {
+    body > header {
+        padding-top: 3.4rem;
+    }
+
     .game-area {
         padding: 1.25rem 1rem;
     }
@@ -675,6 +692,12 @@ header h1::after {
     to {
         opacity: 1;
         transform: none;
+    }
+}
+
+@keyframes pulsar-suave {
+    50% {
+        opacity: 0.45;
     }
 }
 

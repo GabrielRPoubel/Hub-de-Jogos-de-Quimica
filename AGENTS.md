@@ -8,7 +8,7 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - NUNCA leia `comum/tabela-periodica/elements.js` inteiro: são ~36 KB com 1 elemento por
   linha. Use grep pelo símbolo/número e edite só a linha do elemento.
 - Os JS grandes usam marcadores de seção `/* ---------- [XX-NN] nome ---------- */`
-  (G1 = jogo1, G2 = jogo2, TP = tabela periódica). Liste com grep `\[G1-` etc. e leia só
+  (G1 = jogo1, G2 = jogo2, G3 = jogo3, TP = tabela periódica). Liste com grep `\[G1-` etc. e leia só
   a seção necessária.
 - As primeiras seções de `jogo1-equilibrio/game.js` (G1-01) e `jogo2-ligacoes/game.js`
   (G2-01) são bancos de dados grandes; evite lê-las sem necessidade.
@@ -18,6 +18,8 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - `index.html` + `style.css` — home: hero, becker SVG animado, carrossel de jogos.
 - `jogo1-equilibrio/` — balanceamento de equações (`game.js`: banco de reações + fluxo).
 - `jogo2-ligacoes/` — tipos de ligação (`game.js`: banco de compostos + fluxo).
+- `jogo3-distribuicao/` — distribuição eletrônica (`game.js`: expande as configs de
+  `elements.js`; aceita a resposta real ou a previsão de aufbau, com popup de exceção).
 - `tabela-periodica/` — página da tabela (`style.css`: chrome, layout 100dvh).
 - `comum/estilos/base.css` — tokens de design + chrome compartilhado (header, back-link,
   botões, popups, dificuldade, estatísticas, modal, animações).
@@ -40,6 +42,9 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - Breakpoints mobile: `720px` (tabela periódica, com `min-width: 680px` + scroll horizontal),
   `640px` (base, home e jogos) e `400px` (stats em 2 colunas). Hovers ficam dentro de
   `@media (hover: hover)`; alvos de toque com `touch-action: manipulation`.
+- Fim de questão: os três jogos pausam o cronômetro e mostram `.continuar`
+  ("Pressione espaço para continuar", em `base.css`); o avanço é com Espaço (padrão do jogo3).
+  Nada de `setTimeout(nextReaction)` nem "(ESPAÇO para continuar)" colado na mensagem.
 - Dados da tabela: `null` = não medido/inexistente; `previsto: true` para Z ≥ 100; fonte
   base PubChem (massa, fusão/ebulição em °C, densidade) + Wikipedia (raio,
   eletronegatividade, ionização). Não "corrija" valores sem conferir a fonte.

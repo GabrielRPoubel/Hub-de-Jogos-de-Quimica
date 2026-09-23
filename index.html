@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="comum/estilos/base.css?v=5">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="comum/estilos/base.css?v=6">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
@@ -82,6 +82,11 @@
                         <h3>Tipos de Ligações</h3>
                     </div>
 
+                    <div class="jogo-card" role="button" tabindex="0" onclick="openPopup('jogo3')" onkeydown="ativarCard(evento, 'jogo3')">
+                        <span class="icone jogo-icone" data-icone="raio"></span>
+                        <h3>Distribuição Eletrônica</h3>
+                    </div>
+
                     <a class="jogo-card" href="tabela-periodica/index.html">
                         <span class="icone jogo-icone" data-icone="grade"></span>
                         <h3>Tabela Periódica</h3>
@@ -105,18 +110,19 @@
         <p class="carrossel-dica">Arraste ou use as setas ← → para navegar</p>
     </main>
 
-    <script src="comum/icones/icones.js?v=5"></script>
+    <script src="comum/icones/icones.js?v=6"></script>
     <script>
         let currentGame = null;
 
+        const TITULOS_JOGOS = {
+            jogo1: 'Equilíbrio de Reações',
+            jogo2: 'Tipos de Ligações',
+            jogo3: 'Distribuição Eletrônica'
+        };
+
         function openPopup(game) {
             currentGame = game;
-            const title = document.getElementById('popup-title');
-            if (game === 'jogo1') {
-                title.textContent = 'Equilíbrio de Reações';
-            } else {
-                title.textContent = 'Tipos de Ligações';
-            }
+            document.getElementById('popup-title').textContent = TITULOS_JOGOS[game] || '';
             document.getElementById('difficulty-popup').classList.add('show');
             document.getElementById('overlay').classList.add('show');
         }
@@ -127,11 +133,16 @@
             currentGame = null;
         }
 
+        const DESTINOS_JOGOS = {
+            jogo1: 'jogo1-equilibrio/index.html',
+            jogo2: 'jogo2-ligacoes/index.html',
+            jogo3: 'jogo3-distribuicao/index.html'
+        };
+
         function startGame(diff) {
-            if (currentGame === 'jogo1') {
-                window.location.href = `jogo1-equilibrio/index.html?diff=${diff}`;
-            } else {
-                window.location.href = `jogo2-ligacoes/index.html?diff=${diff}`;
+            const destino = DESTINOS_JOGOS[currentGame];
+            if (destino) {
+                window.location.href = `${destino}?diff=${diff}`;
             }
         }
 

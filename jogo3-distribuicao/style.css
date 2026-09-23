@@ -1,0 +1,449 @@
+header {
+    text-align: center;
+    padding: 1.5rem 1rem 0.5rem;
+    display: none;
+}
+
+header.show {
+    display: block;
+    animation: subir 0.45s ease;
+}
+
+header h1 {
+    margin-bottom: 1.4rem;
+}
+
+main {
+    max-width: 1180px;
+    margin: 1.5rem auto 3rem;
+    display: none;
+}
+
+main.show {
+    display: block;
+    animation: subir 0.45s ease;
+}
+
+.game-container {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.game-container .game-area {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ---------- card do elemento ---------- */
+
+.elemento-palco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem;
+    margin-bottom: 1.4rem;
+}
+
+.el-card {
+    position: relative;
+    width: 132px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    background: var(--papel);
+    border: 2px solid var(--borda-forte);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra-suave);
+}
+
+.el-numero {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--texto-fraco);
+}
+
+.el-simbolo {
+    font-family: var(--fonte-titulo);
+    font-size: 2.7rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--terracota);
+}
+
+.el-nome {
+    max-width: 90%;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.progresso {
+    padding: 0.5rem 1rem;
+    border-radius: var(--raio-pill);
+    background: var(--areia);
+    border: 1px solid var(--borda);
+    font-family: var(--fonte-titulo);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- escada de preenchimento ---------- */
+
+.instrucao {
+    max-width: 460px;
+    margin: 0 auto 1.1rem;
+    text-align: center;
+    font-family: var(--fonte-subtexto);
+    font-size: 0.88rem;
+    color: var(--texto-fraco);
+}
+
+.config-scroll {
+    overflow-x: auto;
+    padding: 0.25rem 0.25rem 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.config-area {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(var(--linhas-escada, 7), 72px);
+    gap: 0.5rem;
+    min-width: 620px;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.escada-slot {
+    border: 1px dashed var(--borda);
+    border-radius: var(--raio);
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.linha-config {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 4px;
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra-suave);
+    animation: subir 0.3s ease;
+    z-index: 1;
+}
+
+.linha-config input {
+    height: 54px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: var(--areia);
+    color: var(--texto);
+    font-family: var(--fonte-titulo);
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-align: center;
+    transition: border-color var(--transicao), box-shadow var(--transicao), background var(--transicao);
+    touch-action: manipulation;
+}
+
+.campo-subnivel {
+    width: 66px;
+}
+
+.campo-potencia {
+    width: 52px;
+}
+
+.linha-config input:focus {
+    outline: none;
+    border-color: var(--terracota);
+    background: var(--papel);
+    box-shadow: 0 0 0 3px rgba(192, 102, 74, 0.15);
+}
+
+.linha-config.correto {
+    border-color: var(--oliva);
+    background: rgba(125, 140, 85, 0.12);
+}
+
+.linha-config.incorreto {
+    border-color: var(--terracota);
+    background: rgba(192, 102, 74, 0.12);
+    animation: shake 0.3s;
+}
+
+.linha-config.dica {
+    border-color: var(--ambar);
+    background: rgba(217, 164, 65, 0.16);
+}
+
+.linha-config.revelado {
+    border-color: var(--borda-forte);
+    background: var(--areia);
+}
+
+.linha-config.revelado input {
+    background: transparent;
+    color: var(--texto-suave);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.gabarito {
+    min-height: 1.6rem;
+    text-align: center;
+    font-family: var(--fonte-titulo);
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--terracota-escura);
+    word-break: break-word;
+}
+
+/* ---------- painel de Pauling ---------- */
+
+.pauling-panel {
+    width: 320px;
+    flex-shrink: 0;
+    display: none;
+    padding: 1.25rem;
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra-suave);
+}
+
+.pauling-panel.show {
+    display: block;
+    animation: subir 0.35s ease;
+}
+
+.pauling-panel.blurred .pauling-grade {
+    filter: blur(9px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.pauling-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+
+.pauling-panel-header h3 {
+    font-size: 1.05rem;
+    color: var(--terracota-escura);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pauling-subtitle {
+    font-family: var(--fonte-subtexto);
+    color: var(--texto-fraco);
+    font-size: 0.82rem;
+    margin-bottom: 0.8rem;
+}
+
+.pauling-grade {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.4rem;
+}
+
+.pauling-setas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.pauling-seta {
+    stroke: rgba(192, 102, 74, 0.38);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+}
+
+.pauling-celula {
+    position: relative;
+    padding: 0.6rem 0.3rem;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: var(--papel);
+    text-align: center;
+}
+
+.pauling-ordem {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--texto-fraco);
+}
+
+.pauling-subnivel {
+    font-family: var(--fonte-titulo);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--terracota-escura);
+}
+
+/* ---------- popup de exceção ---------- */
+
+.excecao-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(92vw, 500px);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra-forte);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    z-index: 1001;
+}
+
+.excecao-popup.show {
+    display: block;
+    animation: popup-in 0.28s ease;
+}
+
+.excecao-popup h2 {
+    font-size: 1.2rem;
+    color: var(--terracota-escura);
+    margin-bottom: 0.6rem;
+}
+
+.excecao-texto {
+    font-family: var(--fonte-subtexto);
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+    margin-bottom: 1.1rem;
+}
+
+.excecao-configs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.excecao-linha {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--areia);
+}
+
+.excecao-rotulo {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--texto-fraco);
+}
+
+.excecao-valor {
+    font-family: var(--fonte-titulo);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 900px) {
+    .game-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pauling-panel {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .el-card {
+        width: 112px;
+    }
+
+    .el-simbolo {
+        font-size: 2.3rem;
+    }
+
+    .elemento-palco {
+        gap: 1rem;
+    }
+
+    .config-area {
+        grid-template-rows: repeat(var(--linhas-escada, 7), 64px);
+    }
+
+    .linha-config input {
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .campo-subnivel {
+        width: 60px;
+    }
+
+    .campo-potencia {
+        width: 48px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .pauling-panel {
+        position: fixed;
+        inset: auto 0 0 0;
+        width: 100%;
+        max-height: 75dvh;
+        overflow-y: auto;
+        border-radius: var(--raio-grande) var(--raio-grande) 0 0;
+        box-shadow: var(--sombra-forte);
+        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
+        z-index: 999;
+    }
+}

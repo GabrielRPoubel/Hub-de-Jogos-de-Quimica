@@ -93,9 +93,9 @@ let elapsed = 0;
 let totalElapsed = 0;
 let maxErrors = 3;
 let gamePaused = false;
+let aguardandoEspaco = false;
 let pausedTime = 0;
 let usedReactions = [];
-let spaceHandler = null;
 
 /* ---------- [G2-04] inicialização ---------- */
 document.addEventListener('DOMContentLoaded', () => {
@@ -126,6 +126,7 @@ function selectDifficulty(diff) {
     
     const labels = { facil: 'FÁCIL', medio: 'MÉDIO', dificil: 'DIFÍCIL' };
     document.getElementById('periodic-popup').classList.remove('show');
+    document.getElementById('periodic-popup').classList.toggle('blurred', diff === 'dificil');
     
     gameDuration = QuizBase.aplicarDificuldade(diff, labels[diff], '0');
     startTimers();
@@ -147,7 +148,9 @@ function resetGame() {
     correctAnswers = 0;
     errors = 0;
     usedReactions = [];
+    aguardandoEspaco = false;
     QuizBase.limparPlacar();
+    document.getElementById('continuar').hidden = true;
 }
 
 /* ---------- [G2-08] cronômetros ---------- */
@@ -212,13 +215,28 @@ function renderBondOptions() {
 }
 
 function nextReaction() {
-    removeSpaceHandler();
     currentReaction = getRandomReaction();
+    gamePaused = false;
+    aguardandoEspaco = false;
+    document.getElementById('continuar').hidden = true;
     renderEquation(currentReaction);
     renderBondOptions();
     document.getElementById('message').textContent = '';
     document.getElementById('message').className = 'message';
 }
+
+function aguardarEspaco() {
+    aguardandoEspaco = true;
+    gamePaused = true;
+    document.getElementById('continuar').hidden = false;
+}
+
+document.addEventListener('keydown', evento => {
+    if ((evento.key === ' ' || evento.code === 'Space') && aguardandoEspaco) {
+        evento.preventDefault();
+        nextReaction();
+    }
+});
 
 /* ---------- [G2-11] correção e avanço ---------- */
 function checkAnswer(selected, btn) {
@@ -241,23 +259,7 @@ function checkAnswer(selected, btn) {
         document.getElementById('message').className = 'message error';
     }
     
-    document.getElementById('message').textContent += ' (ESPAÇO para continuar)';
-    
-    removeSpaceHandler();
-    spaceHandler = (e) => {
-        if (e.code === 'Space') {
-            e.preventDefault();
-            nextReaction();
-        }
-    };
-    document.addEventListener('keydown', spaceHandler);
-}
-
-function removeSpaceHandler() {
-    if (spaceHandler) {
-        document.removeEventListener('keydown', spaceHandler);
-        spaceHandler = null;
-    }
+    aguardarEspaco();
 }
 
 function skipQuestion() {

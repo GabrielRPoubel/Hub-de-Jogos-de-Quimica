@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equilíbrio de Reações</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+    <title>Distribuição Eletrônica</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,11 +12,12 @@
 </head>
 <body>
     <a href="../index.html#jogos" class="back-link">← Voltar ao Hub</a>
-    
+
     <div class="overlay" id="overlay"></div>
-    
+
     <div class="difficulty-popup" id="difficulty-popup">
         <h2>Escolha a Dificuldade</h2>
+        <p class="popup-subtitle">Fácil: Z até 20 · Médio: Z até 54 · Difícil: todos os elementos</p>
         <div class="difficulty-options">
             <button class="btn btn-difficulty easy" onclick="selectDifficulty('facil')">
                 <span class="icone diff-icone" data-icone="broto"></span>
@@ -37,7 +35,7 @@
     </div>
 
     <header id="game-header">
-        <h1>Equilíbrio de Reações</h1>
+        <h1>Distribuição Eletrônica</h1>
         <div class="stats">
             <div class="stat">
                 <span class="stat-label">Pontuação</span>
@@ -69,81 +67,69 @@
     <main id="game-main">
         <div class="game-container">
             <div class="game-area">
-                <button class="info-btn" id="info-btn" aria-expanded="false" aria-controls="macho-panel" onclick="toggleMachoPanel()"><span class="icone" data-icone="info"></span></button>
+                <button class="info-btn" id="info-btn" aria-expanded="false" aria-controls="pauling-panel" onclick="togglePaulingPanel()"><span class="icone" data-icone="info"></span></button>
 
-                <div class="equation-display" id="equation-display">
-                    <!-- Equação desbalanceada aparece aqui -->
+                <div class="elemento-palco">
+                    <div class="el-card">
+                        <span class="el-numero" id="el-numero">—</span>
+                        <span class="el-simbolo" id="el-simbolo">?</span>
+                        <span class="el-nome" id="el-nome">—</span>
+                    </div>
+                    <div class="progresso" id="progresso">0/0 e⁻</div>
                 </div>
 
-                <div class="coefficients-area" id="coefficients-area">
-                    <!-- Quadrados para preencher coeficientes -->
+                <p class="instrucao">Preencha os quadradinhos na ordem de energia (diagrama de Pauling): subnível e potência.</p>
+
+                <div class="config-scroll">
+                    <div class="config-area" id="config-area"></div>
                 </div>
 
                 <div class="controls">
                     <button class="btn btn-check" onclick="checkAnswer()">Verificar</button>
+                    <button class="btn btn-hint" id="botao-dica" onclick="usarDica()">Dica</button>
                     <button class="btn btn-skip" onclick="skipQuestion()">Pular</button>
-                    <button class="btn btn-hint" onclick="showHint()">Dica</button>
                 </div>
 
                 <div class="message" id="message"></div>
 
-                <div class="hints-area" id="hints-area"></div>
+                <p class="gabarito" id="gabarito"></p>
 
                 <p class="continuar" id="continuar" hidden>Pressione espaço para continuar</p>
             </div>
 
-            <div class="macho-panel" id="macho-panel">
-                <div class="macho-panel-header">
-                    <h3>Regra MACHO</h3>
-                    <button class="btn-close-panel" aria-label="Fechar painel" onclick="toggleMachoPanel()">✕</button>
+            <div class="pauling-panel" id="pauling-panel">
+                <div class="pauling-panel-header">
+                    <h3>Diagrama de Pauling</h3>
+                    <button class="btn-close-panel" aria-label="Fechar painel" onclick="togglePaulingPanel()">✕</button>
                 </div>
-                <p class="macho-subtitle">Ordem para equilibrar equações</p>
-                <table class="macho-table">
-                    <thead>
-                        <tr>
-                            <th>Letra</th>
-                            <th>Elemento</th>
-                            <th>Dica</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>M</strong></td>
-                            <td>Metal</td>
-                            <td>Equilibre os metais primeiro</td>
-                        </tr>
-                        <tr>
-                            <td><strong>A</strong></td>
-                            <td>Ametal</td>
-                            <td>Depois equilibre os ametais</td>
-                        </tr>
-                        <tr>
-                            <td><strong>C</strong></td>
-                            <td>Carbono</td>
-                            <td>Em seguida, o carbono</td>
-                        </tr>
-                        <tr>
-                            <td><strong>H</strong></td>
-                            <td>Hidrogênio</td>
-                            <td>Depois o hidrogênio</td>
-                        </tr>
-                        <tr>
-                            <td><strong>O</strong></td>
-                            <td>Oxigênio</td>
-                            <td>Por último, o oxigênio</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p class="pauling-subtitle">Ordem crescente de energia</p>
+                <div class="pauling-grade" id="pauling-grade"></div>
             </div>
         </div>
     </main>
+
+    <div class="excecao-popup" id="excecao-popup" role="dialog" aria-modal="true" aria-labelledby="excecao-titulo">
+        <h2 id="excecao-titulo">Exceção à regra!</h2>
+        <p class="excecao-texto" id="excecao-texto"></p>
+        <div class="excecao-configs">
+            <div class="excecao-linha">
+                <span class="excecao-rotulo">Diagrama de Pauling</span>
+                <span class="excecao-valor" id="excecao-diagrama"></span>
+            </div>
+            <div class="excecao-linha">
+                <span class="excecao-rotulo">Configuração real</span>
+                <span class="excecao-valor" id="excecao-real"></span>
+            </div>
+        </div>
+        <button class="btn btn-play" onclick="fecharExcecao()">Entendi</button>
+    </div>
 
     <div class="modal" id="modal-final">
         <div class="modal-content">
             <h2>Fim de Jogo!</h2>
             <div class="final-stats">
                 <p>Pontuação Final: <span id="final-score">0</span></p>
-                <p>Reações Acertadas: <span id="final-total-correct">0</span></p>
+                <p>Elementos Acertados: <span id="final-total-correct">0</span></p>
                 <p>Tempo Total: <span id="total-time">0:00</span></p>
             </div>
             <button class="btn btn-play" onclick="showDifficultyPopup()">Jogar Novamente</button>
@@ -153,6 +139,7 @@
 
     <script src="../comum/icones/icones.js?v=6"></script>
     <script src="../comum/jogos/quiz-base.js?v=6"></script>
+    <script src="../comum/tabela-periodica/elements.js?v=6"></script>
     <script src="game.js?v=6"></script>
 </body>
 </html>

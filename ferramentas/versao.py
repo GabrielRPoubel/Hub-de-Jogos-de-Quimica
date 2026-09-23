@@ -16,6 +16,7 @@ HTMLS = [
     'index.html',
     'jogo1-equilibrio/index.html',
     'jogo2-ligacoes/index.html',
+    'jogo3-distribuicao/index.html',
     'tabela-periodica/index.html',
 ]
 

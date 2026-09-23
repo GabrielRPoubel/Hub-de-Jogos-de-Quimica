@@ -139,6 +139,12 @@ main.show {
     animation: popup-in 0.28s ease;
 }
 
+.periodic-popup.blurred .periodic-popup-content {
+    filter: blur(9px);
+    pointer-events: none;
+    user-select: none;
+}
+
 .periodic-popup-content {
     width: min(1000px, calc(90vw - 3rem));
 }

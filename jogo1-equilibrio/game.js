@@ -296,6 +296,7 @@ let difficulty = null;
 let gameDuration = null;
 let hintedIndex = null;
 let gamePaused = false;
+let aguardandoEspaco = false;
 let pausedTime = 0;
 let usedReactions = [];
 
@@ -333,7 +334,9 @@ function resetGame() {
     hintsUsed = 0;
     hintedIndex = null;
     usedReactions = [];
+    aguardandoEspaco = false;
     QuizBase.limparPlacar();
+    document.getElementById('continuar').hidden = true;
     document.getElementById('hints-area').innerHTML = '';
     document.getElementById('equation-display').innerHTML = '';
     document.getElementById('coefficients-area').innerHTML = '';
@@ -459,7 +462,7 @@ function checkAnswer() {
         inputs.forEach(input => input.classList.add('correct'));
         showMessage(`Correto! +${points} pontos`, 'success');
         
-        setTimeout(nextReaction, 1500);
+        aguardarEspaco();
     } else {
         errors++;
         inputs.forEach(input => input.classList.add('incorrect'));
@@ -469,17 +472,15 @@ function checkAnswer() {
             document.getElementById('errors-count').textContent = remaining;
             
             if (errors >= maxErrors) {
-                gamePaused = true;
                 showMessage('3 erros! Pulando para próxima...', 'error');
-                setTimeout(nextReaction, 1500);
+                aguardarEspaco();
                 return;
             }
             showMessage(`Incorreto! Erros restantes: ${remaining}`, 'error');
         } else if (difficulty === 'dificil') {
-            gamePaused = true;
             document.getElementById('errors-count').textContent = errors;
             showMessage('Incorreto! Trocando equação...', 'error');
-            setTimeout(nextReaction, 1000);
+            aguardarEspaco();
             return;
         } else {
             showMessage('Incorreto! Tente novamente', 'error');
@@ -502,6 +503,12 @@ function showMessage(text, type) {
     const messageEl = document.getElementById('message');
     messageEl.textContent = text;
     messageEl.className = 'message ' + type;
+}
+
+function aguardarEspaco() {
+    aguardandoEspaco = true;
+    gamePaused = true;
+    document.getElementById('continuar').hidden = false;
 }
 
 function showHint() {
@@ -559,10 +566,9 @@ function showHint() {
 
 /* ---------- [G1-11] avanço de questão ---------- */
 function skipQuestion() {
-    gamePaused = true;
     const correctStr = currentReaction.balanced.join(', ');
     showMessage(`Reação pulada. Respostas: ${correctStr}`, 'error');
-    setTimeout(nextReaction, 1500);
+    aguardarEspaco();
 }
 
 function nextReaction() {
@@ -570,6 +576,8 @@ function nextReaction() {
     questionStartTime = Date.now();
     hintsUsed = 0;
     gamePaused = false;
+    aguardandoEspaco = false;
+    document.getElementById('continuar').hidden = true;
     if (difficulty === 'medio') {
         errors = 0;
         document.getElementById('errors-count').textContent = maxErrors;
@@ -605,6 +613,14 @@ function handleKeyPress(event) {
         }
     }
     
+    if (event.key === ' ' || event.code === 'Space') {
+        if (aguardandoEspaco) {
+            event.preventDefault();
+            nextReaction();
+        }
+        return;
+    }
+
     if (event.key === 'Enter') {
         const popup = document.getElementById('difficulty-popup');
         if (popup.classList.contains('show')) return;
