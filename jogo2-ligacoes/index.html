@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../comum/estilos/base.css?v=9">
-    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=9">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="../comum/estilos/base.css?v=10">
+    <link rel="stylesheet" href="../comum/tabela-periodica/tabela-periodica.css?v=10">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
     <a href="../index.html#jogos" class="back-link">← VOLTAR AO HUB</a>
@@ -105,15 +105,19 @@
                 <p>REAÇÕES ACERTADAS: <span id="final-total-correct">0</span></p>
                 <p>TEMPO TOTAL: <span id="total-time">0:00</span></p>
             </div>
+            <div class="ranking-envio" id="ranking-envio"></div>
             <button class="btn btn-play" onclick="showDifficultyPopup()">JOGAR NOVAMENTE</button>
             <a href="../index.html#jogos" class="btn btn-back">VOLTAR AO HUB</a>
         </div>
     </div>
 
-    <script src="../comum/icones/icones.js?v=9"></script>
-    <script src="../comum/tabela-periodica/elements.js?v=9"></script>
-    <script src="../comum/tabela-periodica/tabela-periodica.js?v=9"></script>
-    <script src="../comum/jogos/quiz-base.js?v=9"></script>
-    <script src="game.js?v=9"></script>
+    <script src="../comum/icones/icones.js?v=10"></script>
+    <script src="../comum/tabela-periodica/elements.js?v=10"></script>
+    <script src="../comum/tabela-periodica/tabela-periodica.js?v=10"></script>
+    <script src="../comum/jogos/quiz-base.js?v=10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../comum/ranking/config.js?v=10"></script>
+    <script src="../comum/ranking/ranking.js?v=10"></script>
+    <script src="game.js?v=10"></script>
 </body>
 </html>

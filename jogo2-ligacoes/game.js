@@ -305,5 +305,15 @@ function endGame() {
     document.getElementById('total-time').textContent = 
         `${min}:${sec.toString().padStart(2, '0')}`;
     
+    if (window.Ranking) {
+        Ranking.registrarFimDeJogo({
+            jogo: 'ligacoes',
+            dificuldade: difficulty,
+            pontos: score,
+            acertos: correctAnswers,
+            duracaoSeg: totalElapsed
+        });
+    }
+    
     document.getElementById('modal-final').classList.add('show');
 }

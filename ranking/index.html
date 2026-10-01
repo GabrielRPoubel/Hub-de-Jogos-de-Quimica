@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../comum/estilos/base.css?v=10">
+    <link rel="stylesheet" href="style.css?v=10">
+</head>
+<body>
+    <a href="../index.html#jogos" class="back-link">← Voltar ao Hub</a>
+
+    <main class="ranking-main">
+        <header class="ranking-cabecalho">
+            <h1>Ranking</h1>
+            <p class="subtitle">Melhores pontuações por período</p>
+        </header>
+
+        <div class="ranking-controles">
+            <div class="ranking-grupo" id="ranking-periodos" role="group" aria-label="Período">
+                <button type="button" class="ranking-botao ativo" data-periodo="dia">Dia</button>
+                <button type="button" class="ranking-botao" data-periodo="semana">Semana</button>
+                <button type="button" class="ranking-botao" data-periodo="mes">Mês</button>
+            </div>
+            <div class="ranking-grupo" id="ranking-jogos" role="group" aria-label="Jogo">
+                <button type="button" class="ranking-botao ativo" data-jogo="">Geral</button>
+                <button type="button" class="ranking-botao" data-jogo="equilibrio">Equilíbrio</button>
+                <button type="button" class="ranking-botao" data-jogo="ligacoes">Ligações</button>
+                <button type="button" class="ranking-botao" data-jogo="distribuicao">Distribuição</button>
+            </div>
+        </div>
+
+        <div class="ranking-painel">
+            <table class="ranking-tabela" id="ranking-tabela" hidden>
+                <thead>
+                    <tr>
+                        <th class="ranking-col-pos">#</th>
+                        <th>Jogador</th>
+                        <th class="ranking-col-pontos">Pontos</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-corpo"></tbody>
+            </table>
+            <p class="ranking-aviso" id="ranking-aviso" hidden></p>
+        </div>
+    </main>
+
+    <script src="../comum/icones/icones.js?v=10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../comum/ranking/config.js?v=10"></script>
+    <script src="../comum/ranking/ranking.js?v=10"></script>
+    <script>
+        let periodoAtual = 'dia';
+        let jogoAtual = null;
+
+        const corpo = document.getElementById('ranking-corpo');
+        const tabela = document.getElementById('ranking-tabela');
+        const aviso = document.getElementById('ranking-aviso');
+
+        function mostrarAviso(texto) {
+            aviso.textContent = texto;
+            aviso.hidden = false;
+            tabela.hidden = true;
+        }
+
+        function selecionar(botoes, ativo) {
+            botoes.forEach(botao => botao.classList.toggle('ativo', botao === ativo));
+        }
+
+        function marcarUsuario(usuario) {
+            corpo.querySelectorAll('.ranking-eu').forEach(linha => linha.classList.remove('ranking-eu'));
+            if (!usuario) {
+                return;
+            }
+            const linha = corpo.querySelector('[data-usuario="' + usuario.id + '"]');
+            if (linha) {
+                linha.classList.add('ranking-eu');
+            }
+        }
+
+        async function carregar() {
+            if (!Ranking.disponivel()) {
+                mostrarAviso('Ranking indisponível. Configure a URL e a anon key do Supabase em comum/ranking/config.js.');
+                return;
+            }
+            mostrarAviso('Carregando…');
+            try {
+                const linhas = await Ranking.buscarRanking({ periodo: periodoAtual, jogo: jogoAtual, limite: 20 });
+                if (linhas.length === 0) {
+                    mostrarAviso('Ninguém pontuou neste período ainda. Jogue e seja o primeiro!');
+                    return;
+                }
+                corpo.innerHTML = linhas.map(linha =>
+                    '<tr data-usuario="' + linha.usuario_id + '">' +
+                        '<td class="ranking-col-pos">' + linha.posicao + '</td>' +
+                        '<td class="ranking-jogador">' + linha.apelido + '</td>' +
+                        '<td class="ranking-col-pontos">' + linha.pontos + '</td>' +
+                    '</tr>'
+                ).join('');
+                aviso.hidden = true;
+                tabela.hidden = false;
+                marcarUsuario(Ranking.usuarioAtual());
+            } catch (erro) {
+                mostrarAviso('Não foi possível carregar o ranking agora.');
+            }
+        }
+
+        const botoesPeriodo = Array.from(document.querySelectorAll('#ranking-periodos .ranking-botao'));
+        botoesPeriodo.forEach(botao => {
+            botao.addEventListener('click', () => {
+                selecionar(botoesPeriodo, botao);
+                periodoAtual = botao.dataset.periodo;
+                carregar();
+            });
+        });
+
+        const botoesJogo = Array.from(document.querySelectorAll('#ranking-jogos .ranking-botao'));
+        botoesJogo.forEach(botao => {
+            botao.addEventListener('click', () => {
+                selecionar(botoesJogo, botao);
+                jogoAtual = botao.dataset.jogo || null;
+                carregar();
+            });
+        });
+
+        Ranking.aoMudar(usuario => marcarUsuario(usuario));
+        document.addEventListener('DOMContentLoaded', carregar);
+    </script>
+</body>
+</html>

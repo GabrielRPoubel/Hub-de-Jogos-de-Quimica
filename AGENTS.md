@@ -21,14 +21,18 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - `jogo3-distribuicao/` — distribuição eletrônica (`game.js`: expande as configs de
   `elements.js`; aceita a resposta real ou a previsão de aufbau, com popup de exceção).
 - `tabela-periodica/` — página da tabela (`style.css`: chrome, layout 100dvh).
+- `ranking/` — página de ranking (dia/semana/mês × geral/por jogo).
 - `comum/estilos/base.css` — tokens de design + chrome compartilhado (header, back-link,
-  botões, popups, dificuldade, estatísticas, modal, animações).
+  botões, popups, dificuldade, estatísticas, modal, autenticação/ranking, animações).
 - `comum/icones/icones.js` — SVGs injetados em `[data-icone]` por `montarIcones()`.
   Chaves: balanca, molecula, grade, diagrama, broto, raio, chama, info, seta-esq,
-  seta-dir, jogar, reiniciar.
+  seta-dir, jogar, reiniciar, trofeu.
 - `comum/tabela-periodica/` — componente `TabelaPeriodica` (`elements.js`, `.js`, `.css`).
 - `comum/jogos/quiz-base.js` — `QuizBase`: popup de dificuldade, placar e sorteio de
   reação compartilhados pelos dois jogos.
+- `comum/ranking/` — `config.js` (URL/anon key do Supabase) + `ranking.js` (global
+  `Ranking`: auth, envio de pontuação, ranking). Injetam o widget de auth e o modal.
+- `ferramentas/supabase-ranking.sql` — migração do backend (perfis, pontuações, RLS, RPCs).
 - `ferramentas/` — scripts auxiliares (Python 3 + PowerShell).
 
 ## Convenções
@@ -60,6 +64,11 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - `QuizBase` — `abrirPopupDificuldade([intervalos])`, `fecharPopupDificuldade()`,
   `aplicarDificuldade(diff, rotulo, erroInicial)` → duração em segundos (null = livre),
   `limparPlacar()`, `escolherReacao(lista, usados)`.
+- `Ranking` (só ativo se `config.js` estiver preenchido) — `iniciar()`, `disponivel()`,
+  `usuarioAtual()`, `estaLogado()`, `aoMudar(fn)`, `abrirAuth(motivo)`, `fecharAuth()`,
+  `sair()`, `enviarPontuacao(dados)`, `buscarRanking({periodo,jogo,limite})`,
+  `registrarFimDeJogo({jogo,dificuldade,pontos,acertos,duracaoSeg})`. Os jogos chamam
+  `registrarFimDeJogo` no `endGame()` e renderizam o retorno em `#ranking-envio`.
 - Tokens principais (`base.css`): `--marfim #faf6ee`, `--papel #fffdf8`, `--areia #f4ecdd`,
   `--bege #ece1cd`, `--borda #e3d8c4`, `--texto #3d3226`, `--terracota #c0664a`,
   `--oliva #7d8c55`, `--ambar #d9a441`, `--raio 14px`. Fontes: Quicksand (títulos),
@@ -82,6 +91,9 @@ Publicado em https://gabrielrpoubel.github.io/Hub-de-Jogos-de-Quimica/
 - Nova página: copie o `<head>` de outra página, inclua `base.css`, `icones.js` e os
   arquivos necessários com `?v=`, e adicione o caminho ao array `HTMLS` de
   `ferramentas/versao.py`.
+- Configurar ranking: rodar `ferramentas/supabase-ranking.sql` no SQL Editor do Supabase
+  e preencher `comum/ranking/config.js` (URL + anon key). Sem isso o módulo fica inativo
+  e o site segue funcionando normalmente.
 
 ## Observações
 

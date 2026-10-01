@@ -604,11 +604,261 @@ header h1::after {
     color: var(--terracota-escura);
 }
 
+/* ---------- autenticação / ranking ---------- */
+
+.auth-widget {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 100;
+}
+
+.auth-user {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--raio-pill);
+    background: rgba(255, 253, 248, 0.9);
+    border: 1px solid var(--borda);
+    color: var(--texto);
+    font-family: var(--fonte-titulo);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(8px);
+    box-shadow: var(--sombra-suave);
+}
+
+.auth-btn {
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--raio-pill);
+    border: 1px solid var(--terracota);
+    background: linear-gradient(135deg, var(--terracota), var(--terracota-escura));
+    color: #fff;
+    font-family: var(--fonte-titulo);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    box-shadow: var(--sombra-suave);
+    transition: transform var(--transicao), box-shadow var(--transicao),
+        background var(--transicao), color var(--transicao);
+}
+
+.auth-btn--sair {
+    background: rgba(255, 253, 248, 0.9);
+    border-color: var(--borda);
+    color: var(--texto-suave);
+}
+
+@media (hover: hover) {
+    .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--sombra);
+    }
+
+    .auth-btn--sair:hover {
+        color: var(--terracota-escura);
+        border-color: var(--borda-forte);
+    }
+}
+
+.auth-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(61, 50, 38, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 1001;
+}
+
+.auth-overlay.show {
+    display: block;
+    animation: fade-in 0.25s ease;
+}
+
+.auth-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(92vw, 380px);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra-forte);
+    padding: 2rem;
+    text-align: center;
+    z-index: 1002;
+}
+
+.auth-modal.show {
+    display: block;
+    animation: popup-in 0.28s ease;
+}
+
+.auth-modal h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.35rem;
+}
+
+.auth-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0.4rem 0 1.1rem;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-pill);
+    background: var(--papel);
+    color: var(--texto-suave);
+    font-family: var(--fonte-titulo);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background var(--transicao), color var(--transicao), border-color var(--transicao);
+}
+
+.auth-tab.ativo {
+    background: var(--areia);
+    border-color: var(--borda-forte);
+    color: var(--terracota-escura);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    text-align: left;
+}
+
+.auth-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.auth-campo span {
+    font-family: var(--fonte-titulo);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.auth-campo input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--marfim);
+    color: var(--texto);
+    font-family: var(--fonte-texto);
+    font-size: 0.95rem;
+}
+
+.auth-campo input:focus {
+    outline: none;
+    border-color: var(--terracota);
+    background: var(--papel);
+}
+
+.auth-erro {
+    min-height: 1.1rem;
+    font-family: var(--fonte-subtexto);
+    font-size: 0.85rem;
+    color: var(--terracota-escura);
+}
+
+.auth-erro:empty {
+    min-height: 0;
+}
+
+.auth-modal .btn-play {
+    margin: 0.2rem 0 0;
+}
+
+.auth-google {
+    width: 100%;
+    margin-top: 0.7rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--papel);
+    color: var(--texto-suave);
+    font-family: var(--fonte-titulo);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: border-color var(--transicao), color var(--transicao);
+}
+
+@media (hover: hover) {
+    .auth-google:hover {
+        border-color: var(--borda-forte);
+        color: var(--texto);
+    }
+}
+
+.ranking-envio {
+    margin-top: 1rem;
+}
+
+.ranking-envio-texto {
+    font-family: var(--fonte-subtexto);
+    font-size: 0.95rem;
+    color: var(--texto-suave);
+    margin: 0.3rem 0;
+}
+
+.ranking-envio-texto.success {
+    color: var(--oliva-escura);
+}
+
+.ranking-envio-texto.error {
+    color: var(--terracota-escura);
+}
+
+.btn-ranking-entrar {
+    margin: 0.5rem 0 0;
+}
+
 /* ---------- responsivo ---------- */
 
 @media (max-width: 640px) {
     body > header {
         padding-top: 3.4rem;
+    }
+
+    .auth-widget {
+        top: auto;
+        bottom: 1rem;
+        right: 0.85rem;
+    }
+
+    .auth-modal {
+        padding: 1.6rem 1.25rem;
     }
 
     .game-area {

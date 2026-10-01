@@ -604,6 +604,16 @@ function endGame() {
     document.getElementById('total-time').textContent =
         `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
+    if (window.Ranking) {
+        Ranking.registrarFimDeJogo({
+            jogo: 'distribuicao',
+            dificuldade: difficulty,
+            pontos: score,
+            acertos: correctAnswers,
+            duracaoSeg: totalTime
+        });
+    }
+
     document.getElementById('modal-final').classList.add('show');
 }
 

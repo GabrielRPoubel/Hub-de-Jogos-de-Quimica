@@ -18,6 +18,7 @@ HTMLS = [
     'jogo2-ligacoes/index.html',
     'jogo3-distribuicao/index.html',
     'tabela-periodica/index.html',
+    'ranking/index.html',
 ]
 
 REFERENCIA = re.compile(

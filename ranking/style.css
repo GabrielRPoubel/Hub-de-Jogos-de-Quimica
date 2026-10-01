@@ -1,0 +1,155 @@
+.ranking-main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 0 2rem;
+}
+
+.ranking-cabecalho {
+    text-align: center;
+    margin-bottom: 1.6rem;
+}
+
+.ranking-cabecalho h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+.ranking-cabecalho .subtitle {
+    margin-top: 0.4rem;
+}
+
+.ranking-controles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+}
+
+.ranking-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.ranking-botao {
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-pill);
+    background: var(--papel);
+    color: var(--texto-suave);
+    font-family: var(--fonte-titulo);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background var(--transicao), color var(--transicao), border-color var(--transicao);
+}
+
+.ranking-botao.ativo {
+    background: var(--areia);
+    border-color: var(--borda-forte);
+    color: var(--terracota-escura);
+}
+
+@media (hover: hover) {
+    .ranking-botao:hover {
+        border-color: var(--borda-forte);
+        color: var(--texto);
+    }
+}
+
+.ranking-painel {
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra);
+    padding: 0.5rem 1.25rem 1rem;
+    min-height: 160px;
+}
+
+.ranking-tabela {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ranking-tabela th {
+    padding: 0.85rem 0.6rem;
+    font-family: var(--fonte-titulo);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    border-bottom: 1px solid var(--borda);
+    text-align: left;
+}
+
+.ranking-tabela td {
+    padding: 0.7rem 0.6rem;
+    border-bottom: 1px solid var(--areia);
+    font-family: var(--fonte-texto);
+    font-size: 0.95rem;
+    color: var(--texto);
+}
+
+.ranking-tabela tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.ranking-col-pos {
+    width: 2.4rem;
+    text-align: center;
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    color: var(--texto-fraco);
+}
+
+.ranking-col-pontos {
+    text-align: right;
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    color: var(--terracota);
+    font-variant-numeric: tabular-nums;
+}
+
+.ranking-jogador {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}
+
+.ranking-tabela tbody tr:nth-child(1) .ranking-col-pos {
+    color: var(--ambar-escura);
+}
+
+.ranking-tabela tbody tr.ranking-eu {
+    background: rgba(217, 164, 65, 0.14);
+}
+
+.ranking-tabela tbody tr.ranking-eu .ranking-jogador {
+    font-weight: 700;
+}
+
+.ranking-aviso {
+    padding: 2rem 0.5rem;
+    text-align: center;
+    font-family: var(--fonte-subtexto);
+    color: var(--texto-suave);
+}
+
+.ranking-aviso[hidden] {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .ranking-main {
+        padding-top: 3.6rem;
+    }
+
+    .ranking-painel {
+        padding: 0.25rem 0.75rem 0.75rem;
+    }
+}
